@@ -6,9 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import model.IConstants;
 
-public class UserInterface implements IConstants{
+public class UserInterface extends JFrame implements IConstants{
 	
-	private JFrame frame;
 	private JMenuBar menu;
 	private JMenu clientsMenu, partsMenu, ordersMenu;
 	private JMenuItem newClientItem, modClientItem, suspendClientItem, listClientsItem;
@@ -16,15 +15,15 @@ public class UserInterface implements IConstants{
 	private JMenuItem locateProviderItem, newOrderItem, providerDataItem;
 	
 	public UserInterface() {
-		this.frame = new JFrame(WINDOW_NAME);
-		this.frame.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);  
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super(WINDOW_NAME);
+		super.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);  
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.createMenu();
-		this.frame.setJMenuBar(this.menu);
+		this.setJMenuBar(this.menu);
 		
-		this.frame.setLayout(null);  
-		this.frame.setVisible(true);
+		this.setLayout(null);  
+		this.setVisible(true);
 	}
 	
 	public void createMenu() {
