@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 
-public class newClientPanel extends JPanel{
-
+public class NewClientPanel extends JPanel{
+	public NewClientPanel() {
+		
+	}
 }
