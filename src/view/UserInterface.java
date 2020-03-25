@@ -1,24 +1,29 @@
 package view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import model.IConstants;
 
-public class UserInterface extends JFrame implements IConstants{
+public class UserInterface extends JFrame implements IUIConstants{
 	
 	private JMenuBar menu;
 	private JMenu clientsMenu, partsMenu, ordersMenu;
 	private JMenuItem newClientItem, modClientItem, suspendClientItem, listClientsItem;
 	private JMenuItem newPartItem, deletePartItem, addProviderItem, addCarTypeItem, updatePriceItem, listCarPartsItem;
 	private JMenuItem locateProviderItem, newOrderItem, providerDataItem;
+	private JPanel current;
+	private JPanel newClientPanel, modClientPanel, suspendClientPanel, listClientsPanel;
+	private JPanel newPartPanel, deletePartPanel, addProviderPanel, addCarTypePanel, updatePricePanel, listCarPartsPanel;
+	private JPanel locateProviderPanel, newOrderPanel, providerDataPanel;
 	
 	public UserInterface() {
 		super(WINDOW_NAME);
 		super.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);  
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		this.createPanels();
 		this.createMenu();
 		this.setJMenuBar(this.menu);
 		
@@ -26,7 +31,7 @@ public class UserInterface extends JFrame implements IConstants{
 		this.setVisible(true);
 	}
 	
-	public void createMenu() {
+	private void createMenu() {
 		this.menu = new JMenuBar();
 		this.clientsMenu = new JMenu(CLIENTS_MENU_TITLE);
 		this.partsMenu = new JMenu(PARTS_MENU_TITLE);
@@ -38,10 +43,10 @@ public class UserInterface extends JFrame implements IConstants{
 		this.suspendClientItem = new JMenuItem(SUSPEND_CLIENT_ITEM_TEXT);
 		this.listClientsItem = new JMenuItem(LIST_CLIENTS_ITEM_TEXT);
 		
-		this.newClientItem.addActionListener(this.newClientMenuListener());
-		this.modClientItem.addActionListener(this.modClientMenuListener());
-		this.suspendClientItem.addActionListener(this.suspendClientMenuListener());
-		this.listClientsItem.addActionListener(this.listClientsMenuListener());
+		this.newClientItem.addActionListener(this.menuItemListener(this.current, this.newClientPanel));
+		this.modClientItem.addActionListener(this.menuItemListener(this.current, this.modClientPanel));
+		this.suspendClientItem.addActionListener(this.menuItemListener(this.current, this.suspendClientPanel));
+		this.listClientsItem.addActionListener(this.menuItemListener(this.current, this.listClientsPanel));
 		
 		this.clientsMenu.add(this.newClientItem);
 		this.clientsMenu.add(this.modClientItem);
@@ -56,12 +61,12 @@ public class UserInterface extends JFrame implements IConstants{
 		this.updatePriceItem = new JMenuItem(UPDATE_PRICE_ITEM_TEXT);
 		this.listCarPartsItem = new JMenuItem(LIST_CAR_PARTS_ITEM_TEXT);
 		
-		this.newPartItem.addActionListener(this.newPartMenuListener());
-		this.deletePartItem.addActionListener(this.deletePartMenuListener());
-		this.addProviderItem.addActionListener(this.addProviderMenuListener());
-		this.addCarTypeItem.addActionListener(this.addCarTypeMenuListener());
-		this.updatePriceItem.addActionListener(this.updatePriceMenuListener());
-		this.listCarPartsItem.addActionListener(this.listCarPartsMenuListener());
+		this.newPartItem.addActionListener(this.menuItemListener(this.current, this.newPartPanel));
+		this.deletePartItem.addActionListener(this.menuItemListener(this.current, this.deletePartPanel));
+		this.addProviderItem.addActionListener(this.menuItemListener(this.current, this.addProviderPanel));
+		this.addCarTypeItem.addActionListener(this.menuItemListener(this.current, this.addCarTypePanel));
+		this.updatePriceItem.addActionListener(this.menuItemListener(this.current, this.updatePricePanel));
+		this.listCarPartsItem.addActionListener(this.menuItemListener(this.current, this.listCarPartsPanel));
 		
 		this.partsMenu.add(this.newPartItem);
 		this.partsMenu.add(this.deletePartItem);
@@ -75,143 +80,84 @@ public class UserInterface extends JFrame implements IConstants{
 		this.newOrderItem = new JMenuItem(NEW_ORDER_ITEM_TEXT);
 		this.providerDataItem = new JMenuItem(PROVIDER_DATA_ITEM_TEXT);
 		
-		this.locateProviderItem.addActionListener(this.locateProviderMenuListener());
-		this.newOrderItem.addActionListener(this.newOrderMenuListener());
-		this.providerDataItem.addActionListener(this.providerDataMenuListener());
+		this.locateProviderItem.addActionListener(this.menuItemListener(this.current, this.locateProviderPanel));
+		this.newOrderItem.addActionListener(this.menuItemListener(this.current, this.newOrderPanel));
+		this.providerDataItem.addActionListener(this.menuItemListener(this.current, this.providerDataPanel));
 		
 		this.ordersMenu.add(this.locateProviderItem);
 		this.ordersMenu.add(this.newOrderItem);
 		this.ordersMenu.add(this.providerDataItem);
-		
-		
-		
-		
 		
 		this.menu.add(clientsMenu);
 		this.menu.add(partsMenu);
 		this.menu.add(ordersMenu);
 	}
 	
-	// Client Menu ActionListeners
-	public ActionListener newClientMenuListener() {
+	public ActionListener menuItemListener(JPanel pCurrent, JPanel pNew) {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				System.out.println("a");
+				if (pCurrent != null) {
+					pCurrent.setVisible(false);
+				}
+				pNew.setVisible(true);
 			}
 		};
+		this.current = pNew;
 		return action;
 	}
 	
-	public ActionListener modClientMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("b");
-			}
-		};
-		return action;
+	private void createPanels() {
+		// Client-related panels
+		this.newClientPanel = new NewClientPanel();
+		this.modClientPanel = new ModClientPanel();
+		this.suspendClientPanel = new SuspendClientPanel();
+		this.listClientsPanel = new ListClientsPanel();
+		
+		this.add(this.newClientPanel);
+		this.add(this.modClientPanel);
+		this.add(this.suspendClientPanel);
+		this.add(this.listClientsPanel);
+		
+		this.newClientPanel.setVisible(false);
+		this.modClientPanel.setVisible(false);
+		this.suspendClientPanel.setVisible(false);
+		this.listClientsPanel.setVisible(false);
+		
+		// Parts-related panels
+		this.newPartPanel = new NewPartPanel();
+		this.deletePartPanel = new DeletePartPanel();
+		this.addProviderPanel = new AddProviderPanel();
+		this.addCarTypePanel = new AddCarTypePanel();
+		this.updatePricePanel = new UpdatePricePanel();
+		this.listCarPartsPanel = new ListCarPartsPanel();
+		
+		this.add(this.newPartPanel);
+		this.add(this.deletePartPanel);
+		this.add(this.addProviderPanel);
+		this.add(this.addCarTypePanel);
+		this.add(this.updatePricePanel);
+		this.add(this.listCarPartsPanel);
+		
+		this.newPartPanel.setVisible(false);
+		this.deletePartPanel.setVisible(false);
+		this.addProviderPanel.setVisible(false);
+		this.addCarTypePanel.setVisible(false);
+		this.updatePricePanel.setVisible(false);
+		this.listCarPartsPanel.setVisible(false);
+		
+		// Orders-related panels
+		this.locateProviderPanel = new LocateProviderPanel();
+		this.newOrderPanel = new NewOrderPanel();
+		this.providerDataPanel = new ProviderDataPanel();
+		
+		this.add(this.locateProviderPanel);
+		this.add(this.newOrderPanel);
+		this.add(this.providerDataPanel);
+		
+		this.locateProviderPanel.setVisible(false);
+		this.newOrderPanel.setVisible(false);
+		this.providerDataPanel.setVisible(false);
 	}
-	
-	public ActionListener suspendClientMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("c");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener listClientsMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("d");
-			}
-		};
-		return action;
-	}
-	
-	// Parts Menu ActionListeners
-	public ActionListener newPartMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("e");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener deletePartMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("f");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener addProviderMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("g");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener addCarTypeMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("h");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener updatePriceMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("i");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener listCarPartsMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("j");
-			}
-		};
-		return action;
-	}
-	
-	// Orders Menu ActionListeners
-	public ActionListener locateProviderMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("k");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener newOrderMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("l");
-			}
-		};
-		return action;
-	}
-	
-	public ActionListener providerDataMenuListener() {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				System.out.println("m");
-			}
-		};
-		return action;
-	}
-	
 	
 	public static void main(String[] args) {
 		UserInterface ui = new UserInterface();
