@@ -1,12 +1,16 @@
 package view;
 
 import java.awt.Color;
+
 import javax.swing.*;
 
-public class NewClientPanel extends JPanel{
+public class NewClientPanel extends JPanel implements IUIConstants{
+	
+	
+	
 	public NewClientPanel() {
 		super();
-		this.setBackground(Color.BLUE);
-		this.setSize(500,500);
+		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
+		super.setOpaque(true);
 	}
 }
