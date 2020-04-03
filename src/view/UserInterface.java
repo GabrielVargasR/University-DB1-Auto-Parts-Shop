@@ -107,6 +107,7 @@ public class UserInterface extends JFrame implements IUIConstants{
 				if (pCurrent != null) {
 					pCurrent.setVisible(false);
 				}
+				messageLabel.setText("");
 				pNew.setVisible(true);
 			}
 		};
