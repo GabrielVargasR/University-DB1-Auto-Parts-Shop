@@ -42,5 +42,8 @@ public interface IUIConstants {
 	public static final String TIPO_LABEL = "Tipo de cliente:";
 	public static final String NOMBRE_LABEL = "Nombre:";
 	
+	// Client List constants
+	public static final String[] COLUMN_NAMES = {"Cédula", "Nombre", "Teléfono", "Dirección", "Ciudad", "Contacto"};
+	
 	
 }
