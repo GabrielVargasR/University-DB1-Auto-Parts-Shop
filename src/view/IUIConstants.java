@@ -38,7 +38,9 @@ public interface IUIConstants {
 	public static final String PROVIDER_DATA_ITEM_TEXT = "Asociar compra de partes";
 	
 	//New clients Panel constants
-	
+	public static final String[] TIPOS_CLIENTE = {"", "Persona", "Organización"};
+	public static final String TIPO_LABEL = "Tipo de cliente:";
+	public static final String NOMBRE_LABEL = "Nombre:";
 	
 	
 }
