@@ -3,8 +3,20 @@ package view;
 public interface IUIConstants {
 	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 800;
+	
+	public static final int PANEL_WIDTH = 1000;
+	public static final int PANEL_HEIGHT = 600;
+	public static final int PANEL_X = 0;
+	public static final int PANEL_Y = 0;
+	
+	public static final int MESSAGE_LABEL_WIDTH = 1000;
+	public static final int MESSAGE_LABEL_HEIGHT = 40;
+	public static final int MESSAGE_LABEL_X = 0;
+	public static final int MESSAGE_LABEL_Y = 700;
+	
 	public static final String WINDOW_NAME = "Proyecto 1 Bases de Datos 1 - Gabriel Vargas";
 	
+	// Menu names
 	public static final String CLIENTS_MENU_TITLE = "Clientes";
 	public static final String PARTS_MENU_TITLE = "Partes";
 	public static final String ORDERS_MENU_TITLE = "Órdenes";
@@ -24,4 +36,15 @@ public interface IUIConstants {
 	public static final String LOCATE_PROVIDER_ITEM_TEXT = "Localizar proveedores";
 	public static final String NEW_ORDER_ITEM_TEXT = "Insertar nueva";
 	public static final String PROVIDER_DATA_ITEM_TEXT = "Asociar compra de partes";
+	
+	//New clients Panel constants
+	public static final String[] TIPOS_CLIENTE = {"", "Persona", "Organización"};
+	public static final String TIPO_LABEL = "Tipo de cliente:";
+	public static final String NOMBRE_LABEL = "Nombre:";
+	
+	// Client List constants
+	public static final String[] COLUMN_NAMES = {"Cédula", "Nombre", "Teléfono", "Dirección", "Ciudad", "Contacto"};
+	public static final String[] LOCATE_PROVIDERS = {"Nombre", "Teléfono", "Dirección", "Ciudad", "Contacto"};
+	
+	
 }
