@@ -44,6 +44,7 @@ public interface IUIConstants {
 	
 	// Client List constants
 	public static final String[] COLUMN_NAMES = {"Cédula", "Nombre", "Teléfono", "Dirección", "Ciudad", "Contacto"};
+	public static final String[] LOCATE_PROVIDERS = {"Nombre", "Teléfono", "Dirección", "Ciudad", "Contacto"};
 	
 	
 }
