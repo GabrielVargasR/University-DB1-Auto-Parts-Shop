@@ -8,13 +8,18 @@ import java.sql.Statement;
 
 public class DataBaseCommunicator implements IConstants{
 	
-	public static void main(String[] args) {
-		
-		String connectionUrl = "jdbc:mysql://localhost:3306/progra1";
-        String userName = "root";
-        String password = "vmDTNoK1&b";
-
-        try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); Statement stmt = con.createStatement();) {
+	private String connectionUrl;
+	private String userName;
+	private String password;
+	
+	public DataBaseCommunicator() {
+		this.connectionUrl = "jdbc:mysql://localhost:3306/progra1";
+		this.userName = "root";
+		this.password = "vmDTNoK1&b";
+	}
+	
+	public void testConnection() {
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); Statement stmt = con.createStatement();) {
             String SQL = "SELECT * FROM PRUEBA";
             ResultSet rs = stmt.executeQuery(SQL);
 
@@ -27,6 +32,12 @@ public class DataBaseCommunicator implements IConstants{
         catch (SQLException e) {
             e.printStackTrace();
         }
+	}
+	
+	
+	public static void main(String[] args) {
+		DataBaseCommunicator dbc = new DataBaseCommunicator();
+		dbc.testConnection();
 	}
 }
 
