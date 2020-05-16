@@ -6,6 +6,10 @@ import javax.swing.*;
 
 public class ProviderDataPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel orderIDLabel;
 	private JTextField orderIDEntry;
 	private JLabel amountLabel;

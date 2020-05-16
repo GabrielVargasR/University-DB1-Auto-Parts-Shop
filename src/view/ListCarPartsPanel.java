@@ -8,6 +8,10 @@ import javax.swing.*;
 
 public class ListCarPartsPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel carModelLabel;
 	private JTextField carModelEntry;
 	private JLabel yearLabel;

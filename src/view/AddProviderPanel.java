@@ -6,6 +6,10 @@ import javax.swing.*;
 
 public class AddProviderPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -3862319816807643977L;
 	private JLabel partNameLabel;
 	private JLabel providerNameLabel;
 	private JLabel providerPriceLabel;

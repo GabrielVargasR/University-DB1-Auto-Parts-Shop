@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class ModClientPanel extends JPanel implements IUIConstants{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel tipoLabel;
 	private JLabel nombreLabel;
 	private JLabel cedulaLabel;
@@ -78,7 +82,7 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 	public ActionListener comboListener() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				JComboBox<String> combo = (JComboBox<String>)e.getSource();
+				JComboBox<String> combo = (JComboBox<String>) e.getSource();
 		        String tipo = (String)combo.getSelectedItem();
 		        System.out.println(tipo);
 			}

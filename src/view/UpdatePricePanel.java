@@ -6,6 +6,10 @@ import javax.swing.*;
 
 public class UpdatePricePanel extends JPanel implements IUIConstants{
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel partNameLabel;
 	private JLabel providerNameLabel;
 	private JLabel providerPriceLabel;
