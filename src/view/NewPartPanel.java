@@ -6,6 +6,10 @@ import javax.swing.*;
 
 public class NewPartPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel nombreParteLabel;
 	private JLabel marcaParteLabel;
 	private JLabel nombreFabricanteLabel;

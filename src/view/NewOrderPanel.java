@@ -6,6 +6,10 @@ import javax.swing.*;
 
 public class NewOrderPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel clientNameLabel;
 	private JLabel DateLabel;
 	private JTextField clientNameEntry;

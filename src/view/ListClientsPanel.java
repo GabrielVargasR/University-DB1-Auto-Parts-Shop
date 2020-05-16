@@ -3,6 +3,10 @@ package view;
 import javax.swing.*;
 
 public class ListClientsPanel extends JPanel implements IUIConstants{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	JTable table;
 	JScrollPane scrollPane;
 	

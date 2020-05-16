@@ -6,6 +6,10 @@ import javax.swing.*;
 
 public class DeletePartPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel partNameLabel;
 	private JTextField partNameEntry;
 	private JButton delete;

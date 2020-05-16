@@ -8,6 +8,10 @@ import javax.swing.*;
 
 public class NewClientPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel tipoLabel;
 	private JLabel nombreLabel;
 	private JLabel cedulaLabel;

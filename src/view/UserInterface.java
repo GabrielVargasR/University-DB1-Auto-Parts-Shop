@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +8,10 @@ import javax.swing.*;
 
 public class UserInterface extends JFrame implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7892095287641077782L;
 	private JMenuBar menu;
 	private JMenu clientsMenu, partsMenu, ordersMenu;
 	private JMenuItem newClientItem, modClientItem, suspendClientItem, listClientsItem;

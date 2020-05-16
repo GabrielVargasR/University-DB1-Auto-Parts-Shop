@@ -6,6 +6,10 @@ import javax.swing.*;
 
 public class SuspendClientPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel cedulaLabel;
 	private JTextField cedulaEntry;
 	private JButton suspendButton;

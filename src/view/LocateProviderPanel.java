@@ -8,6 +8,10 @@ import javax.swing.*;
 
 public class LocateProviderPanel extends JPanel implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel partName;
 	private JTextField partNameEntry;
 	
