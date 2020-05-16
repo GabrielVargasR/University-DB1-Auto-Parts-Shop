@@ -1,5 +1,6 @@
 package view;
 
+//import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,6 +8,10 @@ import javax.swing.*;
 
 public class UserInterface extends JFrame implements IUIConstants{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7892095287641077782L;
 	private JMenuBar menu;
 	private JMenu clientsMenu, partsMenu, ordersMenu;
 	private JMenuItem newClientItem, modClientItem, suspendClientItem, listClientsItem;
@@ -16,18 +21,26 @@ public class UserInterface extends JFrame implements IUIConstants{
 	private JPanel newClientPanel, modClientPanel, suspendClientPanel, listClientsPanel;
 	private JPanel newPartPanel, deletePartPanel, addProviderPanel, addCarTypePanel, updatePricePanel, listCarPartsPanel;
 	private JPanel locateProviderPanel, newOrderPanel, providerDataPanel;
+	private JLabel messageLabel;
 	
 	public UserInterface() {
 		super(WINDOW_NAME);
 		super.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);  
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setLayout(null);
+		super.setResizable(false);
 		
 		this.createPanels();
 		this.createMenu();
 		this.setJMenuBar(this.menu);
 		
-		this.setLayout(null);  
-		this.setVisible(true);
+		this.messageLabel = new JLabel("Seleccione una opción del menú");
+		this.messageLabel.setHorizontalAlignment(JLabel.CENTER);
+		this.messageLabel.setVerticalAlignment(JLabel.CENTER);
+		this.messageLabel.setBounds(MESSAGE_LABEL_X, MESSAGE_LABEL_Y, MESSAGE_LABEL_WIDTH, MESSAGE_LABEL_HEIGHT);
+		this.add(this.messageLabel);
+		
+		super.setVisible(true);
 	}
 	
 	private void createMenu() {
@@ -98,6 +111,7 @@ public class UserInterface extends JFrame implements IUIConstants{
 				if (pCurrent != null) {
 					pCurrent.setVisible(false);
 				}
+				messageLabel.setText("");
 				pNew.setVisible(true);
 			}
 		};
