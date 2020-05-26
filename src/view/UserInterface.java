@@ -3,6 +3,7 @@ package view;
 //import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.CardLayout;
 
 import javax.swing.*;
 
@@ -17,11 +18,12 @@ public class UserInterface extends JFrame implements IUIConstants{
 	private JMenuItem newClientItem, modClientItem, suspendClientItem, listClientsItem;
 	private JMenuItem newPartItem, deletePartItem, addProviderItem, addCarTypeItem, updatePriceItem, listCarPartsItem;
 	private JMenuItem locateProviderItem, newOrderItem, providerDataItem;
-	private JPanel current;
+	private JPanel container;
 	private JPanel newClientPanel, modClientPanel, suspendClientPanel, listClientsPanel;
 	private JPanel newPartPanel, deletePartPanel, addProviderPanel, addCarTypePanel, updatePricePanel, listCarPartsPanel;
 	private JPanel locateProviderPanel, newOrderPanel, providerDataPanel;
 	private JLabel messageLabel;
+	private CardLayout layout;
 	
 	public UserInterface() {
 		super(WINDOW_NAME);
@@ -30,11 +32,20 @@ public class UserInterface extends JFrame implements IUIConstants{
 		super.setLayout(null);
 		super.setResizable(false);
 		
+		this.createContainer();
 		this.createPanels();
 		this.createMenu();
 		this.setJMenuBar(this.menu);
 		this.createMessageLabel();
-		
+	}
+
+	private void createContainer(){
+		this.container = new JPanel();
+		this.layout = new CardLayout();
+		this.container.setLayout(this.layout);
+		this.container.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
+		this.container.setOpaque(true);
+		super.add(container);
 	}
 	
 	private void createMenu() {
@@ -49,10 +60,10 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.suspendClientItem = new JMenuItem(SUSPEND_CLIENT_ITEM_TEXT);
 		this.listClientsItem = new JMenuItem(LIST_CLIENTS_ITEM_TEXT);
 		
-		this.newClientItem.addActionListener(this.menuItemListener(this.current, this.newClientPanel));
-		this.modClientItem.addActionListener(this.menuItemListener(this.current, this.modClientPanel));
-		this.suspendClientItem.addActionListener(this.menuItemListener(this.current, this.suspendClientPanel));
-		this.listClientsItem.addActionListener(this.menuItemListener(this.current, this.listClientsPanel));
+		this.newClientItem.addActionListener(this.menuItemListener("1"));
+		this.modClientItem.addActionListener(this.menuItemListener("2"));
+		this.suspendClientItem.addActionListener(this.menuItemListener("3"));
+		this.listClientsItem.addActionListener(this.menuItemListener("4"));
 		
 		this.clientsMenu.add(this.newClientItem);
 		this.clientsMenu.add(this.modClientItem);
@@ -67,12 +78,12 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.updatePriceItem = new JMenuItem(UPDATE_PRICE_ITEM_TEXT);
 		this.listCarPartsItem = new JMenuItem(LIST_CAR_PARTS_ITEM_TEXT);
 		
-		this.newPartItem.addActionListener(this.menuItemListener(this.current, this.newPartPanel));
-		this.deletePartItem.addActionListener(this.menuItemListener(this.current, this.deletePartPanel));
-		this.addProviderItem.addActionListener(this.menuItemListener(this.current, this.addProviderPanel));
-		this.addCarTypeItem.addActionListener(this.menuItemListener(this.current, this.addCarTypePanel));
-		this.updatePriceItem.addActionListener(this.menuItemListener(this.current, this.updatePricePanel));
-		this.listCarPartsItem.addActionListener(this.menuItemListener(this.current, this.listCarPartsPanel));
+		this.newPartItem.addActionListener(this.menuItemListener("5"));
+		this.deletePartItem.addActionListener(this.menuItemListener("6"));
+		this.addProviderItem.addActionListener(this.menuItemListener("7"));
+		this.addCarTypeItem.addActionListener(this.menuItemListener("8"));
+		this.updatePriceItem.addActionListener(this.menuItemListener("9"));
+		this.listCarPartsItem.addActionListener(this.menuItemListener("10"));
 		
 		this.partsMenu.add(this.newPartItem);
 		this.partsMenu.add(this.deletePartItem);
@@ -86,9 +97,9 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.newOrderItem = new JMenuItem(NEW_ORDER_ITEM_TEXT);
 		this.providerDataItem = new JMenuItem(PROVIDER_DATA_ITEM_TEXT);
 		
-		this.locateProviderItem.addActionListener(this.menuItemListener(this.current, this.locateProviderPanel));
-		this.newOrderItem.addActionListener(this.menuItemListener(this.current, this.newOrderPanel));
-		this.providerDataItem.addActionListener(this.menuItemListener(this.current, this.providerDataPanel));
+		this.locateProviderItem.addActionListener(this.menuItemListener("11"));
+		this.newOrderItem.addActionListener(this.menuItemListener("12"));
+		this.providerDataItem.addActionListener(this.menuItemListener("13"));
 		
 		this.ordersMenu.add(this.locateProviderItem);
 		this.ordersMenu.add(this.newOrderItem);
@@ -114,15 +125,10 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.suspendClientPanel = new SuspendClientPanel();
 		this.listClientsPanel = new ListClientsPanel();
 		
-		this.add(this.newClientPanel);
-		this.add(this.modClientPanel);
-		this.add(this.suspendClientPanel);
-		this.add(this.listClientsPanel);
-		
-		this.newClientPanel.setVisible(false);
-		this.modClientPanel.setVisible(false);
-		this.suspendClientPanel.setVisible(false);
-		this.listClientsPanel.setVisible(false);
+		this.container.add(this.newClientPanel, "1");
+		this.container.add(this.modClientPanel, "2");
+		this.container.add(this.suspendClientPanel, "3");
+		this.container.add(this.listClientsPanel, "4");
 		
 		// Parts-related panels
 		this.newPartPanel = new NewPartPanel();
@@ -132,52 +138,36 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.updatePricePanel = new UpdatePricePanel();
 		this.listCarPartsPanel = new ListCarPartsPanel();
 		
-		this.add(this.newPartPanel);
-		this.add(this.deletePartPanel);
-		this.add(this.addProviderPanel);
-		this.add(this.addCarTypePanel);
-		this.add(this.updatePricePanel);
-		this.add(this.listCarPartsPanel);
-		
-		this.newPartPanel.setVisible(false);
-		this.deletePartPanel.setVisible(false);
-		this.addProviderPanel.setVisible(false);
-		this.addCarTypePanel.setVisible(false);
-		this.updatePricePanel.setVisible(false);
-		this.listCarPartsPanel.setVisible(false);
+		this.container.add(this.newPartPanel, "5");
+		this.container.add(this.deletePartPanel, "6");
+		this.container.add(this.addProviderPanel, "7");
+		this.container.add(this.addCarTypePanel, "8");
+		this.container.add(this.updatePricePanel, "9");
+		this.container.add(this.listCarPartsPanel, "10");
 		
 		// Orders-related panels
 		this.locateProviderPanel = new LocateProviderPanel();
 		this.newOrderPanel = new NewOrderPanel();
 		this.providerDataPanel = new ProviderDataPanel();
 		
-		this.add(this.locateProviderPanel);
-		this.add(this.newOrderPanel);
-		this.add(this.providerDataPanel);
-		
-		this.locateProviderPanel.setVisible(false);
-		this.newOrderPanel.setVisible(false);
-		this.providerDataPanel.setVisible(false);
+		this.container.add(this.locateProviderPanel, "11");
+		this.container.add(this.newOrderPanel, "12");
+		this.container.add(this.providerDataPanel, "13");
 	}
 
 	public void display(){
 		super.setVisible(true);
 	}
 	
-	public ActionListener menuItemListener(JPanel pCurrent, JPanel pNew) {
+	public ActionListener menuItemListener(String pIndex) {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				if (pCurrent != null) {
-					pCurrent.setVisible(false);
-				}
+				layout.show(container, pIndex);
 				messageLabel.setText("");
-				pNew.setVisible(true);
 			}
 		};
-		this.current = pNew;
 		return action;
 	}
-
 
 	public static void main(String[] args) {
 		UserInterface ui = new UserInterface();
