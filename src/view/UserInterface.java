@@ -45,6 +45,7 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.container.setLayout(this.layout);
 		this.container.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		this.container.setOpaque(true);
+		this.container.add(new JPanel(), "0");
 		super.add(container);
 	}
 	
