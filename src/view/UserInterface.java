@@ -33,14 +33,8 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.createPanels();
 		this.createMenu();
 		this.setJMenuBar(this.menu);
+		this.createMessageLabel();
 		
-		this.messageLabel = new JLabel("Seleccione una opción del menú");
-		this.messageLabel.setHorizontalAlignment(JLabel.CENTER);
-		this.messageLabel.setVerticalAlignment(JLabel.CENTER);
-		this.messageLabel.setBounds(MESSAGE_LABEL_X, MESSAGE_LABEL_Y, MESSAGE_LABEL_WIDTH, MESSAGE_LABEL_HEIGHT);
-		this.add(this.messageLabel);
-		
-		super.setVisible(true);
 	}
 	
 	private void createMenu() {
@@ -103,22 +97,16 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.menu.add(clientsMenu);
 		this.menu.add(partsMenu);
 		this.menu.add(ordersMenu);
-	}
+	}	
 	
-	public ActionListener menuItemListener(JPanel pCurrent, JPanel pNew) {
-		ActionListener action = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				if (pCurrent != null) {
-					pCurrent.setVisible(false);
-				}
-				messageLabel.setText("");
-				pNew.setVisible(true);
-			}
-		};
-		this.current = pNew;
-		return action;
+	private void createMessageLabel(){
+		this.messageLabel = new JLabel("Seleccione una opción del menú");
+		this.messageLabel.setHorizontalAlignment(JLabel.CENTER);
+		this.messageLabel.setVerticalAlignment(JLabel.CENTER);
+		this.messageLabel.setBounds(MESSAGE_LABEL_X, MESSAGE_LABEL_Y, MESSAGE_LABEL_WIDTH, MESSAGE_LABEL_HEIGHT);
+		this.add(this.messageLabel);
 	}
-	
+
 	private void createPanels() {
 		// Client-related panels
 		this.newClientPanel = new NewClientPanel();
@@ -171,8 +159,28 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.newOrderPanel.setVisible(false);
 		this.providerDataPanel.setVisible(false);
 	}
+
+	public void display(){
+		super.setVisible(true);
+	}
 	
+	public ActionListener menuItemListener(JPanel pCurrent, JPanel pNew) {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){  
+				if (pCurrent != null) {
+					pCurrent.setVisible(false);
+				}
+				messageLabel.setText("");
+				pNew.setVisible(true);
+			}
+		};
+		this.current = pNew;
+		return action;
+	}
+
+
 	public static void main(String[] args) {
 		UserInterface ui = new UserInterface();
+		ui.display();
 	}
 }
