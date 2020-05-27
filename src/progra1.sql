@@ -70,7 +70,7 @@ CREATE TABLE automovil (
 	id DECIMAL(8) NOT NULL,
     modelo VARCHAR(15) NOT NULL,
     año DECIMAL(4) NOT NULL,
-    detalle VARCHAR(20),
+    detalle VARCHAR(50),
     id_fabricante DECIMAL(6) NOT NULL,
     
     PRIMARY KEY(id),
@@ -82,7 +82,7 @@ CREATE TABLE automovil (
 
 CREATE TABLE fabricante_parte (
 	id DECIMAL(8) NOT NULL,
-    nombre VARCHAR(15) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     
     PRIMARY KEY(id),
     UNIQUE(nombre)
@@ -120,10 +120,10 @@ CREATE TABLE orden (
 
 CREATE TABLE proveedor (
 	id DECIMAL(10) NOT NULL,
-    nombre VARCHAR(25) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     direccion VARCHAR(100) NOT NULL,
     ciudad VARCHAR(20),
-    contacto VARCHAR(40),
+    contacto VARCHAR(50),
     
     PRIMARY KEY(id),
     UNIQUE(nombre, direccion)

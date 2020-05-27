@@ -20,12 +20,12 @@ public class DataBaseCommunicator implements IConstants{
 	
 	public void testConnection() {
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); Statement stmt = con.createStatement();) {
-            String SQL = "SELECT * FROM cliente";
+            String SQL = "SELECT * FROM proveedor";
             ResultSet rs = stmt.executeQuery(SQL);
 
             // Iterate through the data in the result set and display it.
             while (rs.next()) {
-                System.out.println(rs.getInt("id") + " " + rs.getString("nombre"));
+                System.out.println(rs.getLong("id") + " " + rs.getString("nombre"));
             }
         }
         // Handle any errors that may have occurred.
