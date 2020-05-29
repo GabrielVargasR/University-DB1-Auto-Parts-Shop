@@ -1,0 +1,10 @@
+DELIMITER //
+
+CREATE PROCEDURE AddDetalleOrden(
+)
+
+BEGIN
+
+END //
+
+DELIMITER ;
