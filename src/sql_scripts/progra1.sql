@@ -4,8 +4,8 @@ CREATE DATABASE progra1;
 USE progra1;
 
 CREATE TABLE cliente (
-	id DECIMAL(9) NOT NULL,
-	nombre VARCHAR(40),
+	id INT NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(80),
     direccion VARCHAR(100),
     ciudad VARCHAR(20),
     estado DECIMAL(1) NOT NULL DEFAULT 0,
@@ -14,9 +14,9 @@ CREATE TABLE cliente (
 );
 
 CREATE TABLE persona (
-	cedula decimal(9) NOT NULL,
-    telefono VARCHAR(8),
-    id_cliente DECIMAL(9) NOT NULL,
+	cedula DECIMAL(9) NOT NULL,
+    telefono DECIMAL(8),
+    id_cliente INT NOT NULL,
     
     PRIMARY KEY(cedula),
     CONSTRAINT fk_id_persona FOREIGN KEY(id_cliente) REFERENCES cliente(id)
@@ -34,7 +34,7 @@ CREATE TABLE contacto (
 
 CREATE TABLE organizacion (
 	cedula DECIMAL(10) NOT NULL, 
-    id_cliente DECIMAL(9) NOT NULL, 
+    id_cliente INT NOT NULL, 
     tel_contacto DECIMAL(8) NOT NULL,
     
     PRIMARY KEY(cedula),
@@ -59,7 +59,7 @@ CREATE TABLE telefonos_organizacion (
 );
 
 CREATE TABLE fabricante_automovil (
-	id DECIMAL(6) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(15) NOT NULL,
     
     PRIMARY KEY(id),
@@ -67,11 +67,11 @@ CREATE TABLE fabricante_automovil (
 );
 
 CREATE TABLE automovil (
-	id DECIMAL(8) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
     modelo VARCHAR(15) NOT NULL,
     año DECIMAL(4) NOT NULL,
     detalle VARCHAR(50),
-    id_fabricante DECIMAL(6) NOT NULL,
+    id_fabricante INT NOT NULL,
     
     PRIMARY KEY(id),
     UNIQUE(modelo, año),
@@ -81,45 +81,65 @@ CREATE TABLE automovil (
 );
 
 CREATE TABLE fabricante_parte (
-	id DECIMAL(8) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,
     
     PRIMARY KEY(id),
     UNIQUE(nombre)
 );
 
+CREATE TABLE marca_parte (
+	id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    
+    PRIMARY KEY(id),
+    UNIQUE(Nombre)
+);
+
 CREATE TABLE parte (
-	id DECIMAL(8) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(30) NOT NULL,
-    marca VARCHAR(15) NOT NULL,
-    id_automovil DECIMAL(8) NOT NULL, 
-    id_fabricante_parte DECIMAL(8) NOT NULL, 
+    marca INT NOT NULL,
+    id_fabricante_parte INT NOT NULL, 
     
     PRIMARY KEY(id),
     UNIQUE (nombre, marca),
-    CONSTRAINT fk_automovil_parte FOREIGN KEY(id_automovil) REFERENCES automovil(id)
+    CONSTRAINT fk_marca_parte FOREIGN KEY(marca) REFERENCES marca_parte(id)
 		ON DELETE RESTRICT
-		ON UPDATE CASCADE,
+        ON UPDATE CASCADE,
     CONSTRAINT fk_fabricante_parte_parte FOREIGN KEY(id_fabricante_parte) REFERENCES fabricante_parte(id)
 		ON DELETE RESTRICT
 		ON UPDATE CASCADE
 );
 
+CREATE TABLE parteautomovil (
+	id_parte INT NOT NULL,
+    id_auto INT NOT NULL,
+    
+    PRIMARY KEY(id_parte, id_auto),
+    CONSTRAINT fk_parte_pa FOREIGN KEY(id_parte) REFERENCES parte(id)
+		ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+	CONSTRAINT fk_auto_pa FOREIGN KEY(id_auto) REFERENCES automovil(id)
+		ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
 CREATE TABLE orden (
-	consecutivo DECIMAL (10) NOT NULL,
-    fecha DATETIME NOT NULL,
-    monto DECIMAL (12, 2) NOT NULL DEFAULT(0),
-    id_cliente DECIMAL(9) NOT NULL,
+	consecutivo INT NOT NULL AUTO_INCREMENT,
+    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- monto DECIMAL (12, 2) NOT NULL DEFAULT(0),
+    id_cliente INT NOT NULL,
     
     PRIMARY KEY(consecutivo),
-    UNIQUE(fecha, monto, id_cliente),
+    -- UNIQUE(fecha, monto, id_cliente),
     CONSTRAINT fk_id_cliente_orden FOREIGN KEY(id_cliente) REFERENCES cliente(id)
 		ON DELETE RESTRICT
 		ON UPDATE CASCADE
 );
 
 CREATE TABLE proveedor (
-	id DECIMAL(10) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,
     direccion VARCHAR(100) NOT NULL,
     ciudad VARCHAR(20),
@@ -130,7 +150,7 @@ CREATE TABLE proveedor (
 );
 
 CREATE TABLE telefonos_proveedor (
-	id_proveedor DECIMAL(10) NOT NULL,
+	id_proveedor INT NOT NULL AUTO_INCREMENT,
     telefono DECIMAL(8) NOT NULL,
     
     PRIMARY KEY(id_proveedor, telefono),
@@ -141,10 +161,10 @@ CREATE TABLE telefonos_proveedor (
 );
 
 CREATE TABLE detalle_orden (
-	consecutivo_detalle DECIMAL(15) NOT NULL,
-    consecutivo_orden DECIMAL(10) NOT NULL,
-    id_proveedor DECIMAL(10) NOT NULL,
-    id_parte DECIMAL(8) NOT NULL,
+	consecutivo_detalle INT NOT NULL AUTO_INCREMENT,
+    consecutivo_orden INT NOT NULL,
+    id_proveedor INT NOT NULL,
+    id_parte INT NOT NULL,
     cantidad SMALLINT DEFAULT(1),
     
     PRIMARY KEY(consecutivo_detalle, consecutivo_orden),
@@ -161,8 +181,8 @@ CREATE TABLE detalle_orden (
 );
 
 CREATE TABLE provee_parte (
-	id_parte DECIMAL(8) NOT NULL,
-    id_proveedor DECIMAL(8) NOT NULL,
+	id_parte INT NOT NULL,
+    id_proveedor INT NOT NULL,
     precio_proveedor DECIMAL(12, 2) NOT NULL,
     precio_cliente DECIMAL(12, 2) NOT NULL,
     
@@ -176,9 +196,9 @@ CREATE TABLE provee_parte (
 );
 
 CREATE TABLE provee (
-	id_proveedor DECIMAL(8) NOT NULL,
-    consecutivo_detalle DECIMAL(15) NOT NULL,
-    consecutivo_orden DECIMAL(10) NOT NULL,
+	id_proveedor INT NOT NULL,
+    consecutivo_detalle INT NOT NULL,
+    consecutivo_orden INT NOT NULL,
     
     PRIMARY KEY(id_proveedor, consecutivo_detalle),
     CONSTRAINT fk_proveedor_provee FOREIGN KEY(id_proveedor) references proveedor(id)
