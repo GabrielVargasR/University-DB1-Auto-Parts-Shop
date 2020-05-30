@@ -2,7 +2,8 @@ DELIMITER //
 
 CREATE PROCEDURE DeleteParte (
 	IN p_nombre_parte VARCHAR(30),
-    IN p_marca_parte VARCHAR(50)
+    IN p_marca_parte VARCHAR(50), 
+    OUT vResult VARCHAR(70)
 )
 
 BEGIN
@@ -22,6 +23,9 @@ BEGIN
     
     IF (v_orden_con_parte IS NULL) THEN
 		DELETE FROM parte WHERE id = v_id_parte;
+        SET vResult = 'Parte borrada con éxito';
+	ELSE
+		SET vResult = 'No se pudo borrar la parte porque estaba asociada a una orden.';
 	END IF;
     
 END //

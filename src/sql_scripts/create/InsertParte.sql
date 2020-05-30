@@ -21,9 +21,8 @@ BEGIN
         WHERE m.nombre = pMarca
 		LIMIT 1;
         
-	INSERT INTO parte (nombre, marca, id_fabricante_prte) VALUES (pNombre, vId_marca, vId_fabricante);
+	INSERT INTO parte (nombre, marca, id_fabricante_parte) VALUES (pNombre, vId_marca, vId_fabricante);
 
 END //
-
 
 DELIMITER ;

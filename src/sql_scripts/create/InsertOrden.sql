@@ -23,7 +23,13 @@ BEGIN
 			WHERE p.cedula = pCedula;
     END IF;
     
-    INSERT INTO orden (id_cliente, fecha) VALUES (idCliente, pFecha);
+    IF (pFecha IS NULL) THEN
+		SET vFecha = CURRENT_TIMESTAMP;
+    ELSE
+		SET vFecha = pFecha;
+    END IF;
+    
+    INSERT INTO orden (id_cliente, fecha) VALUES (idCliente, vFecha);
     
 END //
 

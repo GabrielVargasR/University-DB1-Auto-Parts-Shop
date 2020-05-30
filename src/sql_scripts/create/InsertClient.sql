@@ -8,7 +8,7 @@ CREATE PROCEDURE InsertClient(
     OUT ID INT
 )
 BEGIN
-	INSERT INTO cliente(nombre, dirccion, ciudad) VALUES (pNombre, pDireccion, pCiudad);
+	INSERT INTO cliente(nombre, direccion, ciudad) VALUES (pNombre, pDireccion, pCiudad);
     SELECT c.id
 		INTO ID
 		FROM cliente as c
