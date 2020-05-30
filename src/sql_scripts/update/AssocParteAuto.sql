@@ -1,7 +1,7 @@
 DELIMITER //
 
 CREATE PROCEDURE AssocParteAuto(
-	IN pIdParte       INT,
+	IN pIdParte  INT,
     IN pIdAuto   INT
 )
 

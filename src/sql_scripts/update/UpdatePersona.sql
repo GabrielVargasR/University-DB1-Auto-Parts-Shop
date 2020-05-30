@@ -1,5 +1,6 @@
 DELIMITER //
 
+DROP PROCEDURE IF EXISTS UpdatePersona;
 CREATE PROCEDURE UpdatePersona(
 	IN pCedula DECIMAL(9,0),
 	IN pNombre VARCHAR(80),
