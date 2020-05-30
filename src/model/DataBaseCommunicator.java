@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DataBaseCommunicator implements IConstants{
 	
@@ -136,20 +137,125 @@ public class DataBaseCommunicator implements IConstants{
 	}
 
 	// -------------------------------- READ -------------------------------- 
-	public String[][] listarClientes(){
-		return null;
+	public ArrayList<String[]> listarClientes(){
+		ArrayList<String[]> clientes = new ArrayList<String[]>();
+		clientes.addAll(this.listarPersonas());
+		clientes.addAll(this.listarOrganizacion());
+		return clientes;
 	}
 
-	public String[][] listarPartesAuto(){
-		return null;
+	private ArrayList<String[]> listarPersonas(){
+		String query = "{CALL ReadPersonas()}";
+		ResultSet rs;
+		ArrayList<String[]> personas = new ArrayList<String[]>();
+
+        try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+				int id = rs.getInt("id");
+				long cedula = rs.getLong("cedula");
+				String nombre = rs.getString("nombre");
+				long telefono = rs.getLong("telefono");
+				String direccion = rs.getString("direccion");
+				String ciudad = rs.getString("ciudad");
+				int estado = rs.getInt("estado");
+
+                personas.add(new String[] {Integer.toString(id), Long.toString(cedula), nombre, Long.toString(telefono), direccion, ciudad, Integer.toString(estado), "n/a"});
+			}
+
+			return personas;
+        } catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+			personas.add(new String[] {"Problema conectándose a la base de datos"});
+			return personas;
+        }
 	}
 
-	public String[][] listarProveedores(){
-		return null;
+	private ArrayList<String[]> listarOrganizacion(){
+		String query = "{CALL ReadOrganizaciones()}";
+		ResultSet rs;
+		ArrayList<String[]> organizaciones = new ArrayList<String[]>();
+
+        try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+            rs = stmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				long cedula = rs.getLong("cedula");
+				String nombre = rs.getString("nombre");
+				long telefono = rs.getLong("telefono");
+				String direccion = rs.getString("direccion");
+				String ciudad = rs.getString("ciudad");
+				int estado = rs.getInt("estado");
+				long telContacto = rs.getLong("tel_contacto");
+
+				organizaciones.add(new String[] {Integer.toString(id), Long.toString(cedula), nombre, Long.toString(telefono), 
+												direccion, ciudad, Integer.toString(estado), Long.toString(telContacto)});
+			}
+
+			return organizaciones;
+        } catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+			organizaciones.add(new String[] {"Problema conectándose a la base de datos"});
+			return organizaciones;
+        }
 	}
 
-	public String[] getCliente(){
-		return null;
+	public ArrayList<String[]> listarPartesAuto(String pModelo, int pAño){
+		String query = "{CALL ReadPartesAuto(?,?)}";
+		ResultSet rs;
+		ArrayList<String[]> partes = new ArrayList<String[]>();
+
+        try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setString(1, pModelo);
+            stmt.setInt(2, pAño);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+				int id = rs.getInt("id");
+				String nombre = rs.getString("nombre");
+				String marca = rs.getString("marcaP");
+                partes.add(new String[] {Integer.toString(id), nombre, marca});
+			}
+
+			return partes;
+        } catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+			partes.add(new String[] {"Problema conectándose a la base de datos"});
+			return partes;
+        }
+	}
+
+	public ArrayList<String[]> listarProveedores(String pNombre, String pMarca){
+		String query = "{CALL ReadProveedores(?,?)}";
+		ResultSet rs;
+		ArrayList<String[]> proveedores = new ArrayList<String[]>();
+
+        try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setString(1, pNombre);
+            stmt.setString(2, pMarca);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+				int idProveedor = rs.getInt("idProv");
+				String nombreProveedor = rs.getString("nombreProv");
+				String direccion = rs.getString("direccion");
+				String ciudad = rs.getString("ciudad");
+				int telefono = rs.getInt("telefono");
+				String nombreContacto = rs.getString("contacto");
+
+                proveedores.add(new String[] {Integer.toString(idProveedor), nombreProveedor, direccion, ciudad, Integer.toString(telefono), nombreContacto});
+			}
+
+			return proveedores;
+        } catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+			proveedores.add(new String[] {"Problema conectándose a la base de datos"});
+			return proveedores;
+        }
 	}
 
 	// -------------------------------- UPDATE -------------------------------- 
@@ -358,7 +464,19 @@ public class DataBaseCommunicator implements IConstants{
 		// dbc.asociarProveedorParte(1, 9, 50000, 70000);
 		//dbc.asociarAutoParte(3, 13);
 		// dbc.actualizarPrecioProv(1, 9, 50000, 80000);
-		dbc.asociarDetalleOrden(1, 1, 9, 5);
+		//dbc.asociarDetalleOrden(1, 1, 9, 5);
+
+		// for(String[] parte :  dbc.listarPartesAuto("Prius", 2011)){
+		// 	System.out.println(parte[0] + " " + parte[1] + " " + parte[2]);
+		// }
+
+		// for(String [] prov : dbc.listarProveedores("Parrilla 5GX", "Goyo")){
+		// 	System.out.println(prov[0]+" "+prov[1]+" "+prov[2]+" "+prov[3]+" "+prov[4]+" "+prov[5]);
+		// }
+
+		for(String [] cliente : dbc.listarClientes()){
+			System.out.println(cliente[0]+" "+cliente[1]+" "+cliente[2]+" "+cliente[3]+" "+cliente[4]+" "+cliente[5]+" "+cliente[6]+" "+cliente[7]);
+		}
 	}
 }
 
