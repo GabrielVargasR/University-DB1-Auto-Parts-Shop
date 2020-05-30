@@ -30,7 +30,7 @@ public class DataBaseCommunicator implements IConstants{
 			int idCliente = stmt.getInt(4);
 			String message;
 
-			if (pTipo == 0){
+			if (pTipo == IConstants.PERSONA){
 				message = this.insertarPersona(idCliente, pCedula, pTelefono);
 			} else {
 				message = this.insertarOrganizacion(idCliente, pCedula, pTelefono, pTelContacto);
@@ -112,7 +112,7 @@ public class DataBaseCommunicator implements IConstants{
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			if (pTipo == 0){
+			if (pTipo == IConstants.PERSONA){
 				stmt.setNull(1, Types.INTEGER);
 				stmt.setInt(2, pCedula);
 			} else {
@@ -153,28 +153,164 @@ public class DataBaseCommunicator implements IConstants{
 	}
 
 	// -------------------------------- UPDATE -------------------------------- 
-	public String modificarCliente(){
-		return null;
+	public String modificarCliente(int pTipo, String pNombre, String pDireccion, String pCiudad, int pCedula, int pTelefono, int pTelContacto){
+		if (pTipo == IConstants.PERSONA){
+			return this.modificarPersona(pNombre, pDireccion, pCiudad, pCedula, pTelefono);
+		} else{
+			return this.modificarOrganizacion(pNombre, pDireccion, pCiudad, pCedula, pTelefono, pTelContacto);
+		}
 	}
 
-	public String suspenderCliente(){
-		return null;
+	private String modificarPersona(String pNombre, String pDireccion, String pCiudad, int pCedula, int pTelefono){
+		String query = "{CALL UpdatePersona(?,?,?,?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setInt(1, pCedula);
+			stmt.setString(2, pNombre);
+			stmt.setString(3, pDireccion);
+			stmt.setString(4, pCiudad);
+			stmt.setInt(5, pTelefono);
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Modificado con éxito";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema modificando el cliente. Intente otra vez.";
+        }
 	}
 
-	public String asociarProveedorParte(){
-		return null;
+	private String modificarOrganizacion(String pNombre, String pDireccion, String pCiudad, int pCedula, int pTelefono, int pTelContacto){
+		String query = "{CALL UpdateOrganizacion(?,?,?,?,?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setInt(1, pCedula);
+			stmt.setString(2, pNombre);
+			stmt.setString(3, pDireccion);
+			stmt.setString(4, pCiudad);
+			stmt.setInt(5, pTelefono);
+			stmt.setInt(6, pTelContacto);
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Modificado con éxito";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema modificando el cliente. Intente otra vez.";
+        }
 	}
 
-	public String asociarAutoParte(){
-		return null;
+	public String suspenderCliente(int pTipo, int pCedula, int pCedulaJ){
+		String query = "{CALL SuspendCliente(?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			if (pTipo == IConstants.PERSONA){
+				stmt.setInt(1, pCedula);
+				stmt.setNull(2, Types.INTEGER);
+			} else{
+				stmt.setNull(1, Types.INTEGER);
+				stmt.setInt(2, pCedulaJ);
+			}
+			
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Cliente suspendido";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema suspendiendo al cliente. Intente otra vez.";
+        }
 	}
 
-	public String actualizarPrecioProv(){
-		return null;
+	public String asociarProveedorParte(int pIdParte, int pIdProveedor, float pPrecioProv, float pPrecioCliente){
+		String query = "{CALL AssocParteProvedor(?,?,?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setInt(1, pIdParte);
+			stmt.setInt(2, pIdProveedor);
+			stmt.setFloat(3, pPrecioProv);
+			stmt.setFloat(4, pPrecioCliente);
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Asociados con éxito";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema asociando el proveedor. Intente otra vez.";
+        }
 	}
 
-	public String asociarDetalleOrden(){
-		return null;
+	public String asociarAutoParte(int pIdParte, int pIdAuto){
+		String query = "{CALL AssocParteAuto(?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setInt(1, pIdParte);
+			stmt.setInt(2, pIdAuto);
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Asociados con éxito";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema asociando el auto. Intente otra vez.";
+        }
+	}
+
+	public String actualizarPrecioProv(int pIdParte, int pIdProveedor, float pPrecioProv, float pPrecioCliente){
+		String query = "{CALL UpdatePreciosProveedor(?,?,?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setInt(1, pIdParte);
+			stmt.setInt(2, pIdProveedor);
+			stmt.setFloat(3, pPrecioProv);
+			stmt.setFloat(4, pPrecioCliente);
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Actualizado con éxito";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema actualizando los precios. Intente otra vez.";
+        }
+	}
+
+	public String asociarDetalleOrden(int pConsOrden, int pIdParte, int pIdProveedor, int cantidad){
+		String query = "{CALL CreateDetalle(?,?,?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setInt(1, pConsOrden);
+			stmt.setInt(2, pIdParte);
+			stmt.setInt(3, pIdProveedor);
+			stmt.setInt(4, cantidad);
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Agregada con éxito";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema agregando el detalle. Intente otra vez.";
+        }
 	}
 	
 	// -------------------------------- DELETE -------------------------------- 
@@ -210,6 +346,19 @@ public class DataBaseCommunicator implements IConstants{
 		// dbc.crearOrden(112345678, 0, null);
 		// dbc.insertarParte("Motor 100CC", "Goyo", "International Spare Parts");
 		// System.out.println(dbc.borrarParte("Motor 100CC", "Goyo"));
+		//dbc.listarClientes();
+
+		//dbc.insertarCliente(0, "Daniel Sánchez", "Calle 25", "San Miguel", 198765432, 61236541, 0);
+		//dbc.insertarCliente(1, "Talleres Zúñiga", "A042", "Curidabat", 1212121212, 28851441, 88151234);
+
+		//dbc.modificarCliente(0, "Daniel Sánchez", "Calle 25", "San Miguel", 198765432, 81888888, 0);
+		// dbc.modificarCliente(1, "Talleres Zúñiga", "300 metros norte del cementerio", "Curidabat", 1212121212, 28851441, 88151234);
+		// dbc.suspenderCliente(IConstants.PERSONA, 198765432, 0);
+		// dbc.suspenderCliente(IConstants.ORGANIZACION, 0, 1212121212);
+		// dbc.asociarProveedorParte(1, 9, 50000, 70000);
+		//dbc.asociarAutoParte(3, 13);
+		// dbc.actualizarPrecioProv(1, 9, 50000, 80000);
+		dbc.asociarDetalleOrden(1, 1, 9, 5);
 	}
 }
 
