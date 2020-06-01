@@ -444,39 +444,39 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 	
-	public static void main(String[] args) {
-		DataBaseCommunicator dbc = new DataBaseCommunicator();
-		//dbc.insertarCliente(0, "Gabriel Vargas", "1.5 km norte", "San Rafael", 112345678, 71234567, 0);
-		//System.out.println(dbc.insertarCliente(1, "Taller Vargas", "3 km sur", "Pavas", 1234567890, 22154321, 88151234));
-		//dbc.insertarParte("Parrilla 5GX", "Goyo", "International Spare Parts");
-		// dbc.crearOrden(112345678, 0, null);
-		// dbc.insertarParte("Motor 100CC", "Goyo", "International Spare Parts");
-		// System.out.println(dbc.borrarParte("Motor 100CC", "Goyo"));
-		//dbc.listarClientes();
+	// public static void main(String[] args) {
+	// 	DataBaseCommunicator dbc = new DataBaseCommunicator();
+	// 	dbc.insertarCliente(0, "Gabriel Vargas", "1.5 km norte", "San Rafael", 112345678, 71234567, 0);
+	// 	System.out.println(dbc.insertarCliente(1, "Taller Vargas", "3 km sur", "Pavas", 1234567890, 22154321, 88151234));
+	// 	dbc.insertarParte("Parrilla 5GX", "Goyo", "International Spare Parts");
+	// 	dbc.crearOrden(112345678, 0, null);
+	// 	dbc.insertarParte("Motor 100CC", "Goyo", "International Spare Parts");
+	// 	System.out.println(dbc.borrarParte("Motor 100CC", "Goyo"));
+	// 	dbc.listarClientes();
 
-		//dbc.insertarCliente(0, "Daniel Sánchez", "Calle 25", "San Miguel", 198765432, 61236541, 0);
-		//dbc.insertarCliente(1, "Talleres Zúñiga", "A042", "Curidabat", 1212121212, 28851441, 88151234);
+	// 	dbc.insertarCliente(0, "Daniel Sánchez", "Calle 25", "San Miguel", 198765432, 61236541, 0);
+	// 	dbc.insertarCliente(1, "Talleres Zúñiga", "A042", "Curidabat", 1212121212, 28851441, 88151234);
 
-		//dbc.modificarCliente(0, "Daniel Sánchez", "Calle 25", "San Miguel", 198765432, 81888888, 0);
-		// dbc.modificarCliente(1, "Talleres Zúñiga", "300 metros norte del cementerio", "Curidabat", 1212121212, 28851441, 88151234);
-		// dbc.suspenderCliente(IConstants.PERSONA, 198765432, 0);
-		// dbc.suspenderCliente(IConstants.ORGANIZACION, 0, 1212121212);
-		// dbc.asociarProveedorParte(1, 9, 50000, 70000);
-		//dbc.asociarAutoParte(3, 13);
-		// dbc.actualizarPrecioProv(1, 9, 50000, 80000);
-		//dbc.asociarDetalleOrden(1, 1, 9, 5);
+	// 	dbc.modificarCliente(0, "Daniel Sánchez", "Calle 25", "San Miguel", 198765432, 81888888, 0);
+	// 	dbc.modificarCliente(1, "Talleres Zúñiga", "300 metros norte del cementerio", "Curidabat", 1212121212, 28851441, 88151234);
+	// 	dbc.suspenderCliente(IConstants.PERSONA, 198765432, 0);
+	// 	dbc.suspenderCliente(IConstants.ORGANIZACION, 0, 1212121212);
+	// 	dbc.asociarProveedorParte(1, 9, 50000, 70000);
+	// 	dbc.asociarAutoParte(3, 13);
+	// 	dbc.actualizarPrecioProv(1, 9, 50000, 80000);
+	// 	dbc.asociarDetalleOrden(1, 1, 9, 5);
 
-		// for(String[] parte :  dbc.listarPartesAuto("Prius", 2011)){
-		// 	System.out.println(parte[0] + " " + parte[1] + " " + parte[2]);
-		// }
+	// 	for(String[] parte :  dbc.listarPartesAuto("Prius", 2011)){
+	// 		System.out.println(parte[0] + " " + parte[1] + " " + parte[2]);
+	// 	}
 
-		// for(String [] prov : dbc.listarProveedores("Parrilla 5GX", "Goyo")){
-		// 	System.out.println(prov[0]+" "+prov[1]+" "+prov[2]+" "+prov[3]+" "+prov[4]+" "+prov[5]);
-		// }
+	// 	for(String [] prov : dbc.listarProveedores("Parrilla 5GX", "Goyo")){
+	// 		System.out.println(prov[0]+" "+prov[1]+" "+prov[2]+" "+prov[3]+" "+prov[4]+" "+prov[5]);
+	// 	}
 
-		for(String [] cliente : dbc.listarClientes()){
-			System.out.println(cliente[0]+" "+cliente[1]+" "+cliente[2]+" "+cliente[3]+" "+cliente[4]+" "+cliente[5]+" "+cliente[6]+" "+cliente[7]);
-		}
-	}
+	// 	for(String [] cliente : dbc.listarClientes()){
+	// 		System.out.println(cliente[0]+" "+cliente[1]+" "+cliente[2]+" "+cliente[3]+" "+cliente[4]+" "+cliente[5]+" "+cliente[6]+" "+cliente[7]);
+	// 	}
+	// }
 }
 
