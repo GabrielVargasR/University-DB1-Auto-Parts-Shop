@@ -43,8 +43,11 @@ public interface IUIConstants {
 	public static final String NOMBRE_LABEL = "Nombre:";
 	
 	// Client List constants
-	public static final String[] COLUMN_NAMES = {"Cédula", "Nombre", "Teléfono", "Dirección", "Ciudad", "Contacto"};
-	public static final String[] LOCATE_PROVIDERS = {"Nombre", "Teléfono", "Dirección", "Ciudad", "Contacto"};
+	public static final String[] CLIENTS = {"ID", "Cédula", "Nombre", "Teléfono", "Dirección", "Ciudad", "Estado", "Contacto"};
+	public static final String[] LOCATE_PROVIDERS = {"ID", "Nombre", "Dirección", "Ciudad", "Teléfono", "Contacto"};
+	public static final String[] PARTES_AUTOS = {"ID", "Nombre", "Marca"};
 	
 	
+	public static String PERSONA = "0";
+	public static String ORGANIZACION = "1"; 
 }

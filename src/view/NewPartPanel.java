@@ -1,8 +1,10 @@
 package view;
 
 import java.awt.FlowLayout;
-
+import java.awt.event.*;
 import javax.swing.*;
+
+import controller.ParteController;
 
 public class NewPartPanel extends JPanel implements IUIConstants{
 	
@@ -13,16 +15,14 @@ public class NewPartPanel extends JPanel implements IUIConstants{
 	private JLabel nombreParteLabel;
 	private JLabel marcaParteLabel;
 	private JLabel nombreFabricanteLabel;
-	private JLabel modeloAutoLabel;
-	private JLabel anoAutoLabel;
 	
 	private JTextField nombreParteEntry;
 	private JTextField marcaParteEntry;
 	private JTextField nombreFabricanteEntry;
-	private JTextField modeloAutoEntry;
-	private JTextField anoAutoEntry;
 	
 	private JButton registerPart;
+
+	private ParteController controller;
 	
 	
 	public NewPartPanel() {
@@ -32,17 +32,14 @@ public class NewPartPanel extends JPanel implements IUIConstants{
 		super.setLayout(new FlowLayout(FlowLayout.CENTER, 280, 40));
 		
 		this.initComponents();
-		
+		this.controller = new ParteController();
+
 		this.add(this.nombreParteLabel);
 		this.add(this.nombreParteEntry);
 		this.add(this.marcaParteLabel);
 		this.add(this.marcaParteEntry);
 		this.add(this.nombreFabricanteLabel);
 		this.add(this.nombreFabricanteEntry);
-		this.add(this.modeloAutoLabel);
-		this.add(this.modeloAutoEntry);
-		this.add(this.anoAutoLabel);
-		this.add(this.anoAutoEntry);
 		this.add(this.registerPart);
 		
 	}
@@ -51,16 +48,23 @@ public class NewPartPanel extends JPanel implements IUIConstants{
 		this.nombreParteLabel = new JLabel("Nombre:");
 		this.marcaParteLabel = new JLabel("Marca:");
 		this.nombreFabricanteLabel = new JLabel("Nombre del Fabricante:");
-		this.modeloAutoLabel = new JLabel("Modelo del auto de la parte:");
-		this.anoAutoLabel = new JLabel("Año del automóvil:");
 		
 		this.nombreParteEntry = new JTextField(20);
 		this.marcaParteEntry = new JTextField(20);
 		this.nombreFabricanteEntry = new JTextField(20);
-		this.modeloAutoEntry = new JTextField(20);
-		this.anoAutoEntry = new JTextField(20);
 		
 		this.registerPart = new JButton("Registrar");
+		this.registerPart.addActionListener(this.insertar());
+	}
+
+	public ActionListener insertar() {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){  
+				String mensaje = controller.insertarParte(nombreParteEntry.getText(), marcaParteEntry.getText(), nombreFabricanteEntry.getText());
+				System.out.println(mensaje);
+			}
+		};
+		return action;
 	}
 
 }

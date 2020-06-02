@@ -20,7 +20,7 @@ public class UserInterface extends JFrame implements IUIConstants{
 	private JMenuItem locateProviderItem, newOrderItem, providerDataItem;
 	private JPanel container;
 	private JPanel newClientPanel, modClientPanel, suspendClientPanel, listClientsPanel;
-	private JPanel newPartPanel, deletePartPanel, addProviderPanel, addCarTypePanel, updatePricePanel, listCarPartsPanel;
+	private JPanel newPartPanel, deletePartPanel, addProviderPanel, associateCarPanel, updatePricePanel, listCarPartsPanel;
 	private JPanel locateProviderPanel, newOrderPanel, providerDataPanel;
 	private JLabel messageLabel;
 	private CardLayout layout;
@@ -135,21 +135,21 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.newPartPanel = new NewPartPanel();
 		this.deletePartPanel = new DeletePartPanel();
 		this.addProviderPanel = new AddProviderPanel();
-		this.addCarTypePanel = new AddCarTypePanel();
+		this.associateCarPanel = new AssociateCarPanel();
 		this.updatePricePanel = new UpdatePricePanel();
 		this.listCarPartsPanel = new ListCarPartsPanel();
 		
 		this.container.add(this.newPartPanel, "5");
 		this.container.add(this.deletePartPanel, "6");
 		this.container.add(this.addProviderPanel, "7");
-		this.container.add(this.addCarTypePanel, "8");
+		this.container.add(this.associateCarPanel, "8");
 		this.container.add(this.updatePricePanel, "9");
 		this.container.add(this.listCarPartsPanel, "10");
 		
 		// Orders-related panels
 		this.locateProviderPanel = new LocateProviderPanel();
 		this.newOrderPanel = new NewOrderPanel();
-		this.providerDataPanel = new ProviderDataPanel();
+		this.providerDataPanel = new OrderDetailPanel();
 		
 		this.container.add(this.locateProviderPanel, "11");
 		this.container.add(this.newOrderPanel, "12");
@@ -159,7 +159,7 @@ public class UserInterface extends JFrame implements IUIConstants{
 	public void display(){
 		super.setVisible(true);
 	}
-	
+
 	public ActionListener menuItemListener(String pIndex) {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
