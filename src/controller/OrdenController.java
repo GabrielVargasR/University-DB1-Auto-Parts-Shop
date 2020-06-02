@@ -1,8 +1,9 @@
 package controller;
 
 import model.DataBaseCommunicator;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OrdenController {
 
@@ -12,15 +13,29 @@ public class OrdenController {
 		this.dataBase = new DataBaseCommunicator();
 	}
 
-	public ArrayList<String[]> localizarProveedores(String pNombre, String pMarca){
-		return dataBase.listarProveedores(pNombre, pMarca);
+	public String[][] localizarProveedores(String pNombre, String pMarca){
+		ArrayList<String[]> proveedores = dataBase.listarProveedores(pNombre, pMarca);
+		String[][] array = new String[proveedores.size()][];
+
+		int i = 0;
+		for (String [] row : proveedores){
+			array[i] = row;
+			i++;
+		}
+
+		return array;
 	}
 
 	public String insertarNueva(String pCedula, String pTipo, String pFecha){
 		int cedula = Integer.parseInt(pCedula);
 		int tipo = Integer.parseInt(pTipo);
-		Date fecha = Date.valueOf(pFecha);
-
+		Timestamp fecha;
+		if (pFecha.compareTo("") == 0){
+			Date date = new Date();
+			fecha = new Timestamp(date.getTime());
+		} else{
+			fecha = Timestamp.valueOf(pFecha);
+		}
 		return dataBase.crearOrden(cedula, tipo, fecha);
 	}
 

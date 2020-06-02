@@ -37,7 +37,16 @@ public class ClienteController {
 		return dataBase.suspenderCliente(tipo, cedula, cedulaJ);
 	}
 
-	public ArrayList<String[]> listarClientes(){
-		return dataBase.listarClientes();
+	public String[][] listarClientes(){
+		ArrayList<String[]> clientes = dataBase.listarClientes();
+		String[][] array = new String[clientes.size()][];
+		int i = 0;
+
+		for (String[] cliente : clientes){
+			array[i] = cliente;
+			i++;
+		}
+
+		return array;
 	}
 }

@@ -43,7 +43,17 @@ public class ParteController {
 		return dataBase.actualizarPrecioProv(parte, proveedor, precioP, precioC);
 	}
 
-	public ArrayList<String[]> listar(String pModelo, String pAño){
-		return dataBase.listarPartesAuto(pModelo, Integer.parseInt(pAño));
+	public String[][] listar(String pModelo, String pAño){
+		ArrayList<String[]> partes = dataBase.listarPartesAuto(pModelo, Integer.parseInt(pAño));
+
+		String[][] array = new String[partes.size()][];
+		int i = 0;
+
+		for (String[] parte : partes){
+			array[i] = parte;
+			i++;
+		}
+
+		return array;
 	}
 }
