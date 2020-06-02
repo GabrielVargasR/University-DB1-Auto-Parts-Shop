@@ -33,6 +33,7 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 	private JButton enterInfo;
 
 	private ClienteController controller;
+	private String tipoCliente;
 	
 	
 	public NewClientPanel() {
@@ -79,6 +80,7 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 		this.telefonoContactoEntry = new JTextField(20);
 		
 		this.enterInfo = new JButton("Registrar");
+		this.enterInfo.addActionListener(this.insertar());
 		
 		this.tipoCombo = new JComboBox<String>(TIPOS_CLIENTE);
 		this.tipoCombo.addActionListener(this.comboListener());
@@ -89,19 +91,25 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 			public void actionPerformed(ActionEvent e){  
 				JComboBox<String> combo = (JComboBox<String>)e.getSource();
 		        String tipo = (String)combo.getSelectedItem();
-		        System.out.println(tipo);
+		        if (tipo.compareTo("Persona") == 0){
+					tipoCliente = PERSONA;
+				} else tipoCliente = ORGANIZACION;
 			}
 		};
 		return action;
 	}
 
-	// public ActionListener insertar() {
-	// 	ActionListener action = new ActionListener() {
-	// 		public void actionPerformed(ActionEvent e){  
-	// 			String mensaje = controller.insertarParte(nombreParteEntry.getText(), marcaParteEntry.getText(), nombreFabricanteEntry.getText());
-	// 			System.out.println(mensaje);
-	// 		}
-	// 	};
-	// 	return action;
-	// }
+	public ActionListener insertar() {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				String contacto;
+				if (tipoCliente == PERSONA){
+					contacto = "0";
+				} else contacto = telefonoContactoEntry.getText();
+				String mensaje = controller.insertarCliente(tipoCliente, nombreEntry.getText(), direccionEntry.getText(), ciudadEntry.getText(), cedulaEntry.getText(), telefonoEntry.getText(), contacto);
+				System.out.println(mensaje);
+			}
+		};
+		return action;
+	}
 }
