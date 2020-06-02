@@ -32,10 +32,11 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 	
 	private JButton modInfo;
 	private ClienteController controller;
+	private JLabel mensaje;
 	private String tipoCliente;
 	
 	
-	public ModClientPanel() {
+	public ModClientPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -44,6 +45,7 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 		
 		this.initComponents();
 		this.controller = new ClienteController();
+		this.mensaje = pMessage;
 		
 		this.add(this.cedulaLabel);
 		this.add(this.cedulaEntry);
@@ -106,8 +108,7 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 					contacto = "0";
 				} else contacto = telefonoContactoEntry.getText();
 
-				String mensaje = controller.modificarCliente(tipoCliente, nombreEntry.getText(), direccionEntry.getText(), ciudadEntry.getText(), cedulaEntry.getText(), telefonoEntry.getText(), contacto);
-				System.out.println(mensaje);
+				mensaje.setText(controller.modificarCliente(tipoCliente, nombreEntry.getText(), direccionEntry.getText(), ciudadEntry.getText(), cedulaEntry.getText(), telefonoEntry.getText(), contacto));
 			}
 		};
 		return action;

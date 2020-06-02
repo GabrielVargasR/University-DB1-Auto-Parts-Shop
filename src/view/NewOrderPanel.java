@@ -21,8 +21,9 @@ public class NewOrderPanel extends JPanel implements IUIConstants{
 	private JButton registerOrder;
 
 	private OrdenController controller;
+	private JLabel mensaje;
 
-	public NewOrderPanel() {
+	public NewOrderPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -30,6 +31,7 @@ public class NewOrderPanel extends JPanel implements IUIConstants{
 
 		this.initComponents();
 		this.controller = new OrdenController();
+		this.mensaje = pMessage;
 
 		this.add(this.clientIDLabel);
 		this.add(this.clientIDEntry);
@@ -56,8 +58,7 @@ public class NewOrderPanel extends JPanel implements IUIConstants{
 				String tipo = PERSONA;
 				if (cedula.length() == 10) tipo = ORGANIZACION;
 
-				String message = controller.insertarNueva(cedula, tipo, DateEntry.getText());
-				System.out.println(message);
+				mensaje.setText(controller.insertarNueva(cedula, tipo, DateEntry.getText()));
 			}
 		};
 		return action;

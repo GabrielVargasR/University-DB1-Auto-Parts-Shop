@@ -17,8 +17,9 @@ public class SuspendClientPanel extends JPanel implements IUIConstants{
 	private JTextField cedulaEntry;
 	private JButton suspendButton;
 	private ClienteController controller;
+	private JLabel mensaje;
 	
-	public SuspendClientPanel() {
+	public SuspendClientPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -26,6 +27,7 @@ public class SuspendClientPanel extends JPanel implements IUIConstants{
 		super.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 40));
 		
 		this.controller = new ClienteController();
+		this.mensaje = pMessage;
 
 		this.cedulaLabel = new JLabel("Cédula:");
 		this.cedulaEntry = new JTextField(20);
@@ -45,8 +47,7 @@ public class SuspendClientPanel extends JPanel implements IUIConstants{
 				String tipo = PERSONA;
 				if (cedula.length() == 10) tipo = ORGANIZACION;
 
-				String mensaje = controller.suspenderCliente(tipo, cedula, cedulaJ);
-				System.out.println(mensaje);
+				mensaje.setText(controller.suspenderCliente(tipo, cedula, cedulaJ));
 			}
 		};
 		return action;

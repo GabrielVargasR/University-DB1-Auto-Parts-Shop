@@ -23,9 +23,9 @@ public class NewPartPanel extends JPanel implements IUIConstants{
 	private JButton registerPart;
 
 	private ParteController controller;
+	private JLabel mensaje;
 	
-	
-	public NewPartPanel() {
+	public NewPartPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -33,6 +33,7 @@ public class NewPartPanel extends JPanel implements IUIConstants{
 		
 		this.initComponents();
 		this.controller = new ParteController();
+		this.mensaje = pMessage;
 
 		this.add(this.nombreParteLabel);
 		this.add(this.nombreParteEntry);
@@ -60,8 +61,7 @@ public class NewPartPanel extends JPanel implements IUIConstants{
 	public ActionListener insertar() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				String mensaje = controller.insertarParte(nombreParteEntry.getText(), marcaParteEntry.getText(), nombreFabricanteEntry.getText());
-				System.out.println(mensaje);
+				mensaje.setText(controller.insertarParte(nombreParteEntry.getText(), marcaParteEntry.getText(), nombreFabricanteEntry.getText()));
 			}
 		};
 		return action;

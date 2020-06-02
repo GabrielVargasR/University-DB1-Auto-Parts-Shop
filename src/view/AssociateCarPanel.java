@@ -21,8 +21,9 @@ public class AssociateCarPanel extends JPanel implements IUIConstants{
 	private JButton linkCarButton;
 
 	private ParteController controller;
+	private JLabel mensaje;
 	
-	public AssociateCarPanel() {
+	public AssociateCarPanel(JLabel pMesagge) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -30,6 +31,7 @@ public class AssociateCarPanel extends JPanel implements IUIConstants{
 
 		this.initComponents();
 		this.controller = new ParteController();
+		this.mensaje = pMesagge;
 
 		this.add(this.partNameLabel);
 		this.add(this.partNameEntry);
@@ -51,8 +53,7 @@ public class AssociateCarPanel extends JPanel implements IUIConstants{
 	public ActionListener asociar() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				String mensaje = controller.asociarAuto(partNameEntry.getText(), carModelEntry.getText());
-				System.out.println(mensaje);
+				mensaje.setText(controller.asociarAuto(partNameEntry.getText(), carModelEntry.getText()));
 			}
 		};
 		return action;

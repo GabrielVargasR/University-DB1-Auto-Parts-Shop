@@ -34,9 +34,10 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 
 	private ClienteController controller;
 	private String tipoCliente;
+	private JLabel mensaje;
 	
 	
-	public NewClientPanel() {
+	public NewClientPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -45,6 +46,7 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 		
 		this.initComponents();
 		this.controller = new ClienteController();
+		this.mensaje = pMessage;
 		
 		this.add(this.tipoLabel);
 		this.add(this.tipoCombo);
@@ -106,8 +108,7 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 				if (tipoCliente == PERSONA){
 					contacto = "0";
 				} else contacto = telefonoContactoEntry.getText();
-				String mensaje = controller.insertarCliente(tipoCliente, nombreEntry.getText(), direccionEntry.getText(), ciudadEntry.getText(), cedulaEntry.getText(), telefonoEntry.getText(), contacto);
-				System.out.println(mensaje);
+				mensaje.setText(controller.insertarCliente(tipoCliente, nombreEntry.getText(), direccionEntry.getText(), ciudadEntry.getText(), cedulaEntry.getText(), telefonoEntry.getText(), contacto));
 			}
 		};
 		return action;

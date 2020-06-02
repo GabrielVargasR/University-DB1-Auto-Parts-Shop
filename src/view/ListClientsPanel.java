@@ -15,13 +15,15 @@ public class ListClientsPanel extends JPanel implements IUIConstants{
 	private JButton refresh;
 	
 	private ClienteController controller;
+	private JLabel mensaje;
 
-	public ListClientsPanel() {
+	public ListClientsPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
 
 		this.controller = new ClienteController();
+		this.mensaje = pMessage;
 		
 		this.refresh = new JButton("Listar");
 		this.refresh.addActionListener(this.refreshTable());
@@ -44,8 +46,12 @@ public class ListClientsPanel extends JPanel implements IUIConstants{
 			public void actionPerformed(ActionEvent e){  
 				scrollPane.setVisible(false);
 				String[][] arr = controller.listarClientes();
-				table = new JTable(arr, CLIENTS);
-				showTable();
+				if (arr[0].length != 1){
+					table = new JTable(arr, CLIENTS);
+					showTable();
+				} else {
+					mensaje.setText(arr[0][0]);
+				}
 			}
 		};
 		return action;

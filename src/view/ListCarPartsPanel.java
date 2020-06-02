@@ -26,8 +26,9 @@ public class ListCarPartsPanel extends JPanel implements IUIConstants{
 	private JButton newSearchButton;
 
 	private ParteController controller;
+	private JLabel mensaje;
 
-	public ListCarPartsPanel() {
+	public ListCarPartsPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -36,6 +37,7 @@ public class ListCarPartsPanel extends JPanel implements IUIConstants{
 
 		this.initComponents();
 		this.controller = new ParteController();
+		this.mensaje = pMessage;
 
 		this.add(this.carModelLabel);
 		this.add(this.carModelEntry);
@@ -96,6 +98,11 @@ public class ListCarPartsPanel extends JPanel implements IUIConstants{
 			public void actionPerformed(ActionEvent e){  
 				hideSearch();
 				String[][] partes = controller.listar(carModelEntry.getText(), yearEntry.getText());
+
+				if (partes[0].length == 1){
+					mensaje.setText(partes[0][0]);
+					partes = new String[][] {};
+				}
 				table = new JTable(partes, PARTES_AUTOS);
 				showTable();
 			}
