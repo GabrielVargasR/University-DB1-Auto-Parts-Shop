@@ -104,11 +104,11 @@ public class DataBaseCommunicator implements IConstants{
         }
         catch (SQLException e) {
 			e.printStackTrace();
-			return "Hubo un problema insertando el cliente. Intente otra vez.";
+			return "Hubo un problema insertando la parte. Intente otra vez.";
         }
 	}
 
-	public String crearOrden(int pCedula, int pTipo, Date pFecha){
+	public String crearOrden(int pCedula, int pTipo, Timestamp pFecha){
 		String query = "{CALL InsertOrden(?,?,?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
@@ -122,7 +122,7 @@ public class DataBaseCommunicator implements IConstants{
 			}
 
 			if (pFecha != null) {
-				stmt.setDate(3, pFecha);
+				stmt.setTimestamp(3, pFecha);
 			} else stmt.setNull(3, Types.DATE);
 
 			stmt.executeUpdate();
@@ -132,7 +132,7 @@ public class DataBaseCommunicator implements IConstants{
         }
         catch (SQLException e) {
 			e.printStackTrace();
-			return "Hubo un problema insertando el cliente. Intente otra vez.";
+			return "Hubo un problema creando la orden. Intente otra vez.";
         }
 	}
 
@@ -440,7 +440,7 @@ public class DataBaseCommunicator implements IConstants{
         }
         catch (SQLException e) {
 			e.printStackTrace();
-			return "Hubo un problema insertando el cliente. Intente otra vez.";
+			return "Hubo un problema borrando la parte. Intente otra vez.";
         }
 	}
 	
