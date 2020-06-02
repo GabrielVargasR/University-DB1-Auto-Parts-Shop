@@ -33,10 +33,10 @@ public class UserInterface extends JFrame implements IUIConstants{
 		super.setResizable(false);
 		
 		this.createContainer();
+		this.createMessageLabel();
 		this.createPanels();
 		this.createMenu();
 		this.setJMenuBar(this.menu);
-		this.createMessageLabel();
 	}
 
 	private void createContainer(){
@@ -121,10 +121,10 @@ public class UserInterface extends JFrame implements IUIConstants{
 
 	private void createPanels() {
 		// Client-related panels
-		this.newClientPanel = new NewClientPanel();
-		this.modClientPanel = new ModClientPanel();
-		this.suspendClientPanel = new SuspendClientPanel();
-		this.listClientsPanel = new ListClientsPanel();
+		this.newClientPanel = new NewClientPanel(this.messageLabel);
+		this.modClientPanel = new ModClientPanel(this.messageLabel);
+		this.suspendClientPanel = new SuspendClientPanel(this.messageLabel);
+		this.listClientsPanel = new ListClientsPanel(this.messageLabel);
 		
 		this.container.add(this.newClientPanel, "1");
 		this.container.add(this.modClientPanel, "2");
@@ -132,12 +132,12 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.container.add(this.listClientsPanel, "4");
 		
 		// Parts-related panels
-		this.newPartPanel = new NewPartPanel();
-		this.deletePartPanel = new DeletePartPanel();
-		this.addProviderPanel = new AddProviderPanel();
-		this.associateCarPanel = new AssociateCarPanel();
-		this.updatePricePanel = new UpdatePricePanel();
-		this.listCarPartsPanel = new ListCarPartsPanel();
+		this.newPartPanel = new NewPartPanel(this.messageLabel);
+		this.deletePartPanel = new DeletePartPanel(this.messageLabel);
+		this.addProviderPanel = new AddProviderPanel(this.messageLabel);
+		this.associateCarPanel = new AssociateCarPanel(this.messageLabel);
+		this.updatePricePanel = new UpdatePricePanel(this.messageLabel);
+		this.listCarPartsPanel = new ListCarPartsPanel(this.messageLabel);
 		
 		this.container.add(this.newPartPanel, "5");
 		this.container.add(this.deletePartPanel, "6");
@@ -147,9 +147,9 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.container.add(this.listCarPartsPanel, "10");
 		
 		// Orders-related panels
-		this.locateProviderPanel = new LocateProviderPanel();
-		this.newOrderPanel = new NewOrderPanel();
-		this.providerDataPanel = new OrderDetailPanel();
+		this.locateProviderPanel = new LocateProviderPanel(this.messageLabel);
+		this.newOrderPanel = new NewOrderPanel(this.messageLabel);
+		this.providerDataPanel = new OrderDetailPanel(this.messageLabel);
 		
 		this.container.add(this.locateProviderPanel, "11");
 		this.container.add(this.newOrderPanel, "12");

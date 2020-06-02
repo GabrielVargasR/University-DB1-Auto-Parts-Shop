@@ -19,8 +19,9 @@ public class DeletePartPanel extends JPanel implements IUIConstants{
 	private JButton delete;
 
 	private ParteController controller;
+	private JLabel mensaje;
 
-	public DeletePartPanel() {
+	public DeletePartPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -28,6 +29,7 @@ public class DeletePartPanel extends JPanel implements IUIConstants{
 		super.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 40));
 		
 		this.controller = new ParteController();
+		this.mensaje = pMessage;
 
 		this.partNameLabel = new JLabel("Nombre:");
 		this.add(this.partNameLabel);
@@ -49,8 +51,7 @@ public class DeletePartPanel extends JPanel implements IUIConstants{
 	public ActionListener borrar() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				String mensaje = controller.borrarParte(partNameEntry.getText(), partBrandEntry.getText());
-				System.out.println(mensaje);
+				mensaje.setText(controller.borrarParte(partNameEntry.getText(), partBrandEntry.getText()));
 			}
 		};
 		return action;

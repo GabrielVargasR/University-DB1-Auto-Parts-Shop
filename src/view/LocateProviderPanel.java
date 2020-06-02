@@ -26,8 +26,9 @@ public class LocateProviderPanel extends JPanel implements IUIConstants{
 	private JScrollPane scrollPane;
 
 	private OrdenController controller;
+	private JLabel mensaje;
 
-	public LocateProviderPanel() {
+	public LocateProviderPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -36,6 +37,7 @@ public class LocateProviderPanel extends JPanel implements IUIConstants{
 
 		this.initComponents();
 		this.controller = new OrdenController();
+		this.mensaje = pMessage;
 		
 		this.add(this.partName);
 		this.add(this.partNameEntry);
@@ -96,6 +98,12 @@ public class LocateProviderPanel extends JPanel implements IUIConstants{
 			public void actionPerformed(ActionEvent e){  
 				hideSearch();
 				String[][] proveedores = controller.localizarProveedores(partNameEntry.getText(), partBrandEntry.getText());
+
+				if (proveedores[0].length == 1){
+					mensaje.setText(proveedores[0][0]);
+					proveedores = new String[][] {};
+				}
+
 				table = new JTable(proveedores, LOCATE_PROVIDERS);
 				showTable();
 			}

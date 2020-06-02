@@ -25,8 +25,9 @@ public class AddProviderPanel extends JPanel implements IUIConstants{
 	private JButton addProviderButton;
 
 	private ParteController controller;
+	private JLabel mensaje;
 
-	public AddProviderPanel() {
+	public AddProviderPanel(JLabel pMensaje) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -34,6 +35,7 @@ public class AddProviderPanel extends JPanel implements IUIConstants{
 
 		this.initComponents();
 		this.controller = new ParteController();
+		this.mensaje = pMensaje;
 
 		this.add(this.partNameLabel);
 		this.add(this.partNameEntry);
@@ -62,11 +64,14 @@ public class AddProviderPanel extends JPanel implements IUIConstants{
 		this.addProviderButton.addActionListener(this.asociar());
 	}
 
+	// private void setMessage(String pText){
+	// 	this.mensaje.setText(text);
+	// }
+
 	public ActionListener asociar() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				String mensaje = controller.asociarProveedor(partNameEntry.getText(), providerNameEntry.getText(), providerPriceEntry.getText(), shopPriceEntry.getText());
-				System.out.println(mensaje);
+				mensaje.setText(controller.asociarProveedor(partNameEntry.getText(), providerNameEntry.getText(), providerPriceEntry.getText(), shopPriceEntry.getText()));
 			}
 		};
 		return action;

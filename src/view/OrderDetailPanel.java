@@ -26,15 +26,16 @@ public class OrderDetailPanel extends JPanel implements IUIConstants{
 	private JButton associateAmount;
 
 	private OrdenController controller;
+	private JLabel mensaje;
 
-
-	public OrderDetailPanel() {
+	public OrderDetailPanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
 		super.setLayout(new FlowLayout(FlowLayout.CENTER, 280, 40));
 
 		this.initComponents();
+		this.mensaje = pMessage;
 
 		this.add(this.orderIDLabel);
 		this.add(this.orderIDEntry);
@@ -66,9 +67,7 @@ public class OrderDetailPanel extends JPanel implements IUIConstants{
 	public ActionListener associate() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				String mensaje = controller.asociarDetalle(orderIDEntry.getText(), partNameEntry.getText(), providerNameEntry.getText(), amountEntry.getText());
-				// 3, 1, 9, 4
-				System.out.println(mensaje);
+				mensaje.setText(controller.asociarDetalle(orderIDEntry.getText(), partNameEntry.getText(), providerNameEntry.getText(), amountEntry.getText()));
 			}
 		};
 		return action;

@@ -25,8 +25,9 @@ public class UpdatePricePanel extends JPanel implements IUIConstants{
 	private JButton addProviderButton;
 
 	private ParteController controller;
+	private JLabel mensaje;
 
-	public UpdatePricePanel() {
+	public UpdatePricePanel(JLabel pMessage) {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
@@ -34,6 +35,7 @@ public class UpdatePricePanel extends JPanel implements IUIConstants{
 
 		this.initComponents();
 		this.controller = new ParteController();
+		this.mensaje = pMessage;
 
 		this.add(this.partNameLabel);
 		this.add(this.partNameEntry);
@@ -65,8 +67,7 @@ public class UpdatePricePanel extends JPanel implements IUIConstants{
 	public ActionListener actualizar() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				String mensaje = controller.actualizarPrecio(partNameEntry.getText(), providerNameEntry.getText(), providerPriceEntry.getText(), shopPriceEntry.getText());
-				System.out.println(mensaje);
+				mensaje.setText(controller.actualizarPrecio(partNameEntry.getText(), providerNameEntry.getText(), providerPriceEntry.getText(), shopPriceEntry.getText()));
 			}
 		};
 		return action;
