@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import controller.ClienteController;
+
 public class NewClientPanel extends JPanel implements IUIConstants{
 	
 	/**
@@ -29,6 +31,8 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 	private JTextField telefonoContactoEntry;
 	
 	private JButton enterInfo;
+
+	private ClienteController controller;
 	
 	
 	public NewClientPanel() {
@@ -39,6 +43,7 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 		super.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 40));
 		
 		this.initComponents();
+		this.controller = new ClienteController();
 		
 		this.add(this.tipoLabel);
 		this.add(this.tipoCombo);
@@ -89,4 +94,14 @@ public class NewClientPanel extends JPanel implements IUIConstants{
 		};
 		return action;
 	}
+
+	// public ActionListener insertar() {
+	// 	ActionListener action = new ActionListener() {
+	// 		public void actionPerformed(ActionEvent e){  
+	// 			String mensaje = controller.insertarParte(nombreParteEntry.getText(), marcaParteEntry.getText(), nombreFabricanteEntry.getText());
+	// 			System.out.println(mensaje);
+	// 		}
+	// 	};
+	// 	return action;
+	// }
 }

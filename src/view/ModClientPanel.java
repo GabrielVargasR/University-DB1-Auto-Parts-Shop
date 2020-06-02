@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import controller.ClienteController;
+
 public class ModClientPanel extends JPanel implements IUIConstants{
 	/**
 	 *
@@ -29,6 +31,7 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 	private JTextField telefonoContactoEntry;
 	
 	private JButton modInfo;
+	private ClienteController controller;
 	
 	
 	public ModClientPanel() {
@@ -39,6 +42,7 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 		super.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 40));
 		
 		this.initComponents();
+		this.controller = new ClienteController();
 		
 		this.add(this.cedulaLabel);
 		this.add(this.cedulaEntry);
@@ -89,4 +93,14 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 		};
 		return action;
 	}
+
+	// public ActionListener modificar() {
+	// 	ActionListener action = new ActionListener() {
+	// 		public void actionPerformed(ActionEvent e){  
+	// 			String mensaje = controller.insertarParte(nombreParteEntry.getText(), marcaParteEntry.getText(), nombreFabricanteEntry.getText());
+	// 			System.out.println(mensaje);
+	// 		}
+	// 	};
+	// 	return action;
+	// }
 }

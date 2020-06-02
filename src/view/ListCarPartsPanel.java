@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import controller.ParteController;
+
 public class ListCarPartsPanel extends JPanel implements IUIConstants{
 	
 	/**
@@ -23,6 +25,8 @@ public class ListCarPartsPanel extends JPanel implements IUIConstants{
 	private JScrollPane scrollPane;
 	private JButton newSearchButton;
 
+	private ParteController controller;
+
 	public ListCarPartsPanel() {
 		super();
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
@@ -31,6 +35,7 @@ public class ListCarPartsPanel extends JPanel implements IUIConstants{
 		super.setLayout(new FlowLayout(FlowLayout.CENTER, 280, 40));
 
 		this.initComponents();
+		this.controller = new ParteController();
 
 		this.add(this.carModelLabel);
 		this.add(this.carModelEntry);
@@ -53,13 +58,14 @@ public class ListCarPartsPanel extends JPanel implements IUIConstants{
 		
 		this.newSearchButton = new JButton("Nueva búsqueda");
 		this.newSearchButton.addActionListener(this.newSearch());
+
+		String[][] arr = {};
+		this.table = new JTable(arr, PARTES_AUTOS);
 	}
 	
 	private void showTable() {
-		String[][] arr = {};
-		this.table = new JTable(arr, COLUMN_NAMES);
         this.scrollPane = new JScrollPane(this.table); 
-        this.add(this.scrollPane); 
+        this.add(this.scrollPane);
         
         this.newSearchButton.setVisible(true);
 	}
@@ -89,6 +95,8 @@ public class ListCarPartsPanel extends JPanel implements IUIConstants{
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
 				hideSearch();
+				String[][] partes = controller.listar(carModelEntry.getText(), yearEntry.getText());
+				table = new JTable(partes, PARTES_AUTOS);
 				showTable();
 			}
 		};
