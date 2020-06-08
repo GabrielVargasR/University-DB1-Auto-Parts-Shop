@@ -111,7 +111,8 @@ public class DataBaseCommunicator implements IConstants{
 	}
 
 	public String crearOrden(int pCedula, int pTipo, Timestamp pFecha){
-		String query = "{CALL InsertOrden(?,?,?)}";
+		String query = "{CALL InsertOrden(?,?,?,?,?)}";
+		int flag;
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
@@ -127,10 +128,18 @@ public class DataBaseCommunicator implements IConstants{
 				stmt.setTimestamp(3, pFecha);
 			} else stmt.setNull(3, Types.DATE);
 
+			stmt.registerOutParameter(4, Types.INTEGER);
+			stmt.registerOutParameter(5, Types.INTEGER);
+
 			stmt.executeUpdate();
+
+			flag = stmt.getInt(4);
+			int consecutivo = stmt.getInt(5);
+
 			stmt.close();
-        	con.close();
-			return "Agregada con éxito";
+			con.close();
+			if (flag == 1) return "No se pudo crear la orden porque el cliente está suspendido.";
+			return "Agregada con éxito. Consecutivo: " + consecutivo;
         }
         catch (SQLException e) {
 			e.printStackTrace();
@@ -275,7 +284,7 @@ public class DataBaseCommunicator implements IConstants{
             while (rs.next()) {
 				if (nombre == "") nombre = rs.getString("nombre");
 				fecha = rs.getDate("fecha");
-				monto += ((rs.getInt("porcentaje") + 1)*rs.getInt("precio")*rs.getInt("cantidad"));
+				monto += (((rs.getDouble("porcentaje") + 1)*rs.getInt("precio"))*rs.getInt("cantidad"));
 			}
 			return new String[] {nombre, fecha.toString(), Integer.toString(monto)};
 
@@ -456,20 +465,27 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
-	public String asociarDetalleOrden(int pConsOrden, int pIdParte, int pIdProveedor, int cantidad){
-		String query = "{CALL CreateDetalle(?,?,?,?)}";
+	public String asociarDetalleOrden(int pConsOrden, String pNombreParte, String pMarcaParte, String pNombreProveedor, int pCantidad){
+		String query = "{CALL CreateDetalle(?,?,?,?,?,?)}";
+		int flag;
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
 			stmt.setInt(1, pConsOrden);
-			stmt.setInt(2, pIdParte);
-			stmt.setInt(3, pIdProveedor);
-			stmt.setInt(4, cantidad);
+			stmt.setString(2, pNombreParte);
+			stmt.setString(3, pMarcaParte);
+			stmt.setString(4, pNombreProveedor);
+			stmt.setInt(5, pCantidad);
+			stmt.registerOutParameter(6, Types.INTEGER);
 
 			stmt.executeUpdate();
+		    flag = stmt.getInt("estado");
 			stmt.close();
-        	con.close();
-			return "Agregada con éxito";
+			con.close();
+			if (flag == 0){
+				return "Agregada con éxito";
+			} else return "El proveedor no provee la parte especificada.";
+			
         }
         catch (SQLException e) {
 			e.printStackTrace();

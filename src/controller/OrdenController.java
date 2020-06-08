@@ -40,13 +40,11 @@ public class OrdenController implements IConstants{
 		return dataBase.crearOrden(cedula, tipo, fecha);
 	}
 
-	public String asociarDetalle(String pConsOrden, String pIdParte, String pIdProveedor, String pCantidad){
+	public String asociarDetalle(String pConsOrden, String pNombreParte, String pMarcaParte, String pNombreProveedor, String pCantidad){
 		int cons = Integer.parseInt(pConsOrden);
-		int parte = Integer.parseInt(pIdParte);
-		int proveedor = Integer.parseInt(pIdProveedor);
 		int cantidad = Integer.parseInt(pCantidad);
 
-		return dataBase.asociarDetalleOrden(cons, parte, proveedor, cantidad);
+		return dataBase.asociarDetalleOrden(cons, pNombreParte, pMarcaParte, pNombreProveedor, cantidad);
 	}
 
 	public String[] leerOrden(String pConsecutivo){
