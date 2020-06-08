@@ -1,5 +1,6 @@
 DELIMITER //
 
+DROP PROCEDURE IF EXISTS InsertContacto//
 CREATE PROCEDURE InsertContacto (
 	IN pNombre VARCHAR(40),
     IN pTelefono DECIMAL(8,0),

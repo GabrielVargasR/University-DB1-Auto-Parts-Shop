@@ -16,7 +16,7 @@ public class DataBaseCommunicator implements IConstants{
 	}
 
 	// -------------------------------- CREATE -------------------------------- 
-	public String insertarCliente(int pTipo, String pNombre, String pDireccion, String pCiudad, int pCedula, int pTelefono, int pTelContacto){
+	public String insertarCliente(int pTipo, String pNombre, String pDireccion, String pCiudad, long pCedula, int pTelefono, String pNombreContacto, int pTelContacto, String pCargoContacto){
 		String query = "{CALL InsertClient(?, ?, ?, ?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
@@ -34,7 +34,7 @@ public class DataBaseCommunicator implements IConstants{
 			if (pTipo == IConstants.PERSONA){
 				message = this.insertarPersona(idCliente, pCedula, pTelefono);
 			} else {
-				message = this.insertarOrganizacion(idCliente, pCedula, pTelefono, pTelContacto);
+				message = this.insertarOrganizacion(idCliente, pCedula, pTelefono, pNombreContacto, pTelContacto, pCargoContacto);
 			}
 
 			stmt.close();
@@ -47,12 +47,12 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
-	private String insertarPersona(int pIdCliente, int pCedula, int pTelefono){
+	private String insertarPersona(int pIdCliente, long pCedula, int pTelefono){
 		String query = "{CALL InsertPersona(?, ?, ?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			stmt.setInt(1, pCedula);
+			stmt.setLong(1, pCedula);
 			stmt.setInt(2, pTelefono);
 			stmt.setInt(3, pIdCliente);
 
@@ -67,15 +67,17 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
-	private String insertarOrganizacion(int pIdCliente, int pCedula, int pTelefono, int pTelContacto){
-		String query = "{CALL InsertOrganizacion(?, ?, ?, ?)}";
+	private String insertarOrganizacion(int pIdCliente, long pCedula, int pTelefono, String pNombreContacto, int pTelContacto, String pCargoContacto){
+		String query = "{CALL InsertOrganizacion(?, ?, ?, ?, ?, ?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			stmt.setInt(1, pCedula);
+			stmt.setLong(1, pCedula);
 			stmt.setInt(2, pTelefono);
-			stmt.setInt(3, pTelContacto);
-			stmt.setInt(4, pIdCliente);
+			stmt.setString(3, pNombreContacto);
+			stmt.setInt(4, pTelContacto);
+			stmt.setString(5, pCargoContacto);
+			stmt.setInt(6, pIdCliente);
 
 			stmt.executeUpdate();
 			stmt.close();
@@ -161,7 +163,7 @@ public class DataBaseCommunicator implements IConstants{
 				String ciudad = rs.getString("ciudad");
 				int estado = rs.getInt("estado");
 
-                personas.add(new String[] {Integer.toString(id), Long.toString(cedula), nombre, Long.toString(telefono), direccion, ciudad, Integer.toString(estado), "n/a"});
+                personas.add(new String[] {Integer.toString(id), Long.toString(cedula), nombre, Long.toString(telefono), direccion, ciudad, ESTADOS[estado], "n/a"});
 			}
 
 			return personas;
@@ -191,7 +193,7 @@ public class DataBaseCommunicator implements IConstants{
 				long telContacto = rs.getLong("tel_contacto");
 
 				organizaciones.add(new String[] {Integer.toString(id), Long.toString(cedula), nombre, Long.toString(telefono), 
-												direccion, ciudad, Integer.toString(estado), Long.toString(telContacto)});
+												direccion, ciudad, ESTADOS[estado], Long.toString(telContacto)});
 			}
 
 			return organizaciones;
@@ -258,21 +260,46 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
+	public String[] leerOrden(int pConsecutivo){
+		String query = "{CALL ReadOrden(?)}";
+		ResultSet rs;
+		int monto = 0;
+		String nombre = "";
+		java.util.Date fecha = new java.util.Date();
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setInt(1, pConsecutivo);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+				if (nombre == "") nombre = rs.getString("nombre");
+				fecha = rs.getDate("fecha");
+				monto += ((rs.getInt("porcentaje") + 1)*rs.getInt("precio")*rs.getInt("cantidad"));
+			}
+			return new String[] {nombre, fecha.toString(), Integer.toString(monto)};
+
+        } catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+			return new String[] {"Orden no encontrada"};
+        }
+	}
+
 	// -------------------------------- UPDATE -------------------------------- 
-	public String modificarCliente(int pTipo, String pNombre, String pDireccion, String pCiudad, int pCedula, int pTelefono, int pTelContacto){
+	public String modificarCliente(int pTipo, String pNombre, String pDireccion, String pCiudad, long pCedula, int pTelefono, String pNombreContacto, int pTelContacto, String pCargoContacto){
 		if (pTipo == IConstants.PERSONA){
 			return this.modificarPersona(pNombre, pDireccion, pCiudad, pCedula, pTelefono);
 		} else{
-			return this.modificarOrganizacion(pNombre, pDireccion, pCiudad, pCedula, pTelefono, pTelContacto);
+			return this.modificarOrganizacion(pNombre, pDireccion, pCiudad, pCedula, pTelefono, pNombreContacto, pTelContacto, pCargoContacto);
 		}
 	}
 
-	private String modificarPersona(String pNombre, String pDireccion, String pCiudad, int pCedula, int pTelefono){
+	private String modificarPersona(String pNombre, String pDireccion, String pCiudad, long pCedula, int pTelefono){
 		String query = "{CALL UpdatePersona(?,?,?,?,?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			stmt.setInt(1, pCedula);
+			stmt.setLong(1, pCedula);
 			stmt.setString(2, pNombre);
 			stmt.setString(3, pDireccion);
 			stmt.setString(4, pCiudad);
@@ -289,17 +316,19 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
-	private String modificarOrganizacion(String pNombre, String pDireccion, String pCiudad, int pCedula, int pTelefono, int pTelContacto){
-		String query = "{CALL UpdateOrganizacion(?,?,?,?,?,?)}";
+	private String modificarOrganizacion(String pNombre, String pDireccion, String pCiudad, long pCedula, int pTelefono, String pNombreContacto, int pTelContacto, String pCargoContacto){
+		String query = "{CALL UpdateOrganizacion(?,?,?,?,?,?,?,?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			stmt.setInt(1, pCedula);
+			stmt.setLong(1, pCedula);
 			stmt.setString(2, pNombre);
 			stmt.setString(3, pDireccion);
 			stmt.setString(4, pCiudad);
 			stmt.setInt(5, pTelefono);
-			stmt.setInt(6, pTelContacto);
+			stmt.setString(6, pNombreContacto);
+			stmt.setInt(7, pTelContacto);
+			stmt.setString(8, pCargoContacto);
 
 			stmt.executeUpdate();
 			stmt.close();
@@ -337,15 +366,41 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
-	public String asociarProveedorParte(int pIdParte, int pIdProveedor, float pPrecioProv, float pPrecioCliente){
-		String query = "{CALL AssocParteProvedor(?,?,?,?)}";
+	public String activarCliente(int pTipo, int pCedula, int pCedulaJ){
+		String query = "{CALL ActivarCliente(?,?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			stmt.setInt(1, pIdParte);
-			stmt.setInt(2, pIdProveedor);
-			stmt.setFloat(3, pPrecioProv);
-			stmt.setFloat(4, pPrecioCliente);
+			if (pTipo == IConstants.PERSONA){
+				stmt.setInt(1, pCedula);
+				stmt.setNull(2, Types.INTEGER);
+			} else{
+				stmt.setNull(1, Types.INTEGER);
+				stmt.setInt(2, pCedulaJ);
+			}
+			
+
+			stmt.executeUpdate();
+			stmt.close();
+        	con.close();
+			return "Cliente activado";
+        }
+        catch (SQLException e) {
+			e.printStackTrace();
+			return "Hubo un problema activando al cliente. Intente otra vez.";
+        }
+	}
+
+	public String asociarProveedorParte(String pNombreParte, String pMarcaParte, String pNombreProveedor, float pPrecioProv, float pPorcentajeGanancia){
+		String query = "{CALL AssocParteProvedor(?,?,?,?,?)}";
+
+		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
+
+			stmt.setString(1, pNombreParte);
+			stmt.setString(2, pMarcaParte);
+			stmt.setString(3, pNombreProveedor);
+			stmt.setFloat(4, pPrecioProv);
+			stmt.setFloat(5, pPorcentajeGanancia);
 
 			stmt.executeUpdate();
 			stmt.close();
@@ -358,13 +413,15 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
-	public String asociarAutoParte(int pIdParte, int pIdAuto){
-		String query = "{CALL AssocParteAuto(?,?)}";
+	public String asociarAutoParte(String pNombreParte, String pMarcaParte, String pModeloAuto, int pAnnoAuto){
+		String query = "{CALL AssocParteAuto(?,?,?,?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			stmt.setInt(1, pIdParte);
-			stmt.setInt(2, pIdAuto);
+			stmt.setString(1, pNombreParte);
+			stmt.setString(2, pMarcaParte);
+			stmt.setString(3, pModeloAuto);
+			stmt.setInt(4, pAnnoAuto);
 
 			stmt.executeUpdate();
 			stmt.close();
@@ -377,15 +434,16 @@ public class DataBaseCommunicator implements IConstants{
         }
 	}
 
-	public String actualizarPrecioProv(int pIdParte, int pIdProveedor, float pPrecioProv, float pPrecioCliente){
-		String query = "{CALL UpdatePreciosProveedor(?,?,?,?)}";
+	public String actualizarPrecioProv(String pNombreParte, String pMarcaParte, String pNombreProveedor, float pPrecioProv, float pPorcentajeGanancia){
+		String query = "{CALL UpdatePreciosProveedor(?,?,?,?,?)}";
 
 		try (Connection con = DriverManager.getConnection(connectionUrl, userName, password); CallableStatement stmt = con.prepareCall(query);) {
 
-			stmt.setInt(1, pIdParte);
-			stmt.setInt(2, pIdProveedor);
-			stmt.setFloat(3, pPrecioProv);
-			stmt.setFloat(4, pPrecioCliente);
+			stmt.setString(1, pNombreParte);
+			stmt.setString(2, pMarcaParte);
+			stmt.setString(3, pNombreProveedor);
+			stmt.setFloat(4, pPrecioProv);
+			stmt.setFloat(5, pPorcentajeGanancia);
 
 			stmt.executeUpdate();
 			stmt.close();

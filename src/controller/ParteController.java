@@ -19,28 +19,23 @@ public class ParteController {
 		return dataBase.borrarParte(pNombre, pMarca);
 	}
 	
-	public String asociarProveedor(String pIdParte, String pIdProveedor, String pPrecioProv, String pPrecioCliente){
-		int parte = Integer.parseInt(pIdParte);
-		int proveedor = Integer.parseInt(pIdProveedor);
+	public String asociarProveedor(String pNombreParte, String pMarcaParte, String pNombreProveedor, String pPrecioProv, String pPorcentajeGanancia){
 		float precioP = Float.parseFloat(pPrecioProv);
-		float precioC = Float.parseFloat(pPrecioCliente);
+		float porcentaje = Float.parseFloat(pPorcentajeGanancia);
 
-		return dataBase.asociarProveedorParte(parte, proveedor, precioP, precioC);
+		return dataBase.asociarProveedorParte(pNombreParte, pMarcaParte, pNombreProveedor, precioP, porcentaje);
 	}
 
-	public String asociarAuto(String pIdParte, String pIdAuto){
-		int parte = Integer.parseInt(pIdParte);
-		int auto = Integer.parseInt(pIdAuto);
-		return dataBase.asociarAutoParte(parte, auto);
+	public String asociarAuto(String pNombreParte, String pMarcaParte, String pModeloAuto, String pAnnoAuto){
+		int auto = Integer.parseInt(pAnnoAuto);
+		return dataBase.asociarAutoParte(pNombreParte, pMarcaParte, pModeloAuto, auto);
 	}
 
-	public String actualizarPrecio(String pIdParte, String pIdProveedor, String pPrecioProv, String pPrecioCliente){
-		int parte = Integer.parseInt(pIdParte);
-		int proveedor = Integer.parseInt(pIdProveedor);
+	public String actualizarPrecio(String pNombreParte, String pMarcaParte, String pNombreProveedor, String pPrecioProv, String pPorcentajeGanancia){
 		float precioP = Float.parseFloat(pPrecioProv);
-		float precioC = Float.parseFloat(pPrecioCliente);
+		float porcentaje = Float.parseFloat(pPorcentajeGanancia);
 
-		return dataBase.actualizarPrecioProv(parte, proveedor, precioP, precioC);
+		return dataBase.actualizarPrecioProv(pNombreParte, pMarcaParte, pNombreProveedor, precioP, porcentaje);
 	}
 
 	public String[][] listar(String pModelo, String pAño){

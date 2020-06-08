@@ -16,6 +16,7 @@ public class SuspendClientPanel extends JPanel implements IUIConstants{
 	private JLabel cedulaLabel;
 	private JTextField cedulaEntry;
 	private JButton suspendButton;
+	private JButton activateButton;
 	private ClienteController controller;
 	private JLabel mensaje;
 	
@@ -33,10 +34,13 @@ public class SuspendClientPanel extends JPanel implements IUIConstants{
 		this.cedulaEntry = new JTextField(20);
 		this.suspendButton = new JButton("Suspender");
 		this.suspendButton.addActionListener(this.suspender());
+		this.activateButton = new JButton("Activar");
+		this.activateButton.addActionListener(this.activar());
 		
 		this.add(this.cedulaLabel);
 		this.add(cedulaEntry);
 		this.add(this.suspendButton);
+		this.add(this.activateButton);
 	}
 
 	public ActionListener suspender() {
@@ -48,6 +52,20 @@ public class SuspendClientPanel extends JPanel implements IUIConstants{
 				if (cedula.length() == 10) tipo = ORGANIZACION;
 
 				mensaje.setText(controller.suspenderCliente(tipo, cedula, cedulaJ));
+			}
+		};
+		return action;
+	}
+
+	public ActionListener activar() {
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				String cedula = cedulaEntry.getText();
+				String cedulaJ = cedula;
+				String tipo = PERSONA;
+				if (cedula.length() == 10) tipo = ORGANIZACION;
+
+				mensaje.setText(controller.activarCliente(tipo, cedula, cedulaJ));
 			}
 		};
 		return action;

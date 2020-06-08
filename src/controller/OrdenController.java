@@ -1,11 +1,12 @@
 package controller;
 
 import model.DataBaseCommunicator;
+import model.IConstants;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class OrdenController {
+public class OrdenController implements IConstants{
 
 	private DataBaseCommunicator dataBase;
 
@@ -46,5 +47,23 @@ public class OrdenController {
 		int cantidad = Integer.parseInt(pCantidad);
 
 		return dataBase.asociarDetalleOrden(cons, parte, proveedor, cantidad);
+	}
+
+	public String[] leerOrden(String pConsecutivo){
+		String[] valores = new String[5];
+
+		int i = 0;
+		for (String valor : dataBase.leerOrden(Integer.parseInt(pConsecutivo))) {
+			valores[i] = valor;
+			i++;
+		}
+
+		int monto = Integer.parseInt(valores[2]);
+		double valorIva = monto * IVA;
+		valores[3] = Double.toString(valorIva);
+
+		double total = monto + valorIva;
+		valores[4] = Double.toString(total);
+		return valores;
 	}
 }

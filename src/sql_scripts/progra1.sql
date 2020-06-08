@@ -146,6 +146,7 @@ CREATE TABLE proveedor (
     contacto VARCHAR(50),
     
     PRIMARY KEY(id),
+    CONSTRAINT c_name UNIQUE(nombre),
     UNIQUE(nombre, direccion)
 );
 
@@ -184,7 +185,7 @@ CREATE TABLE provee_parte (
 	id_parte INT NOT NULL,
     id_proveedor INT NOT NULL,
     precio_proveedor DECIMAL(12, 2) NOT NULL,
-    precio_cliente DECIMAL(12, 2) NOT NULL,
+    porcentaje_ganancia DECIMAL(3, 2) NOT NULL,
     
     PRIMARY KEY(id_parte, id_proveedor),
     CONSTRAINT fk_parte_prov_parte FOREIGN KEY(id_parte) references parte(id)
