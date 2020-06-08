@@ -11,22 +11,22 @@ public class ClienteController {
 		this.dataBase = new DataBaseCommunicator();
 	}
 
-	public String insertarCliente(String pTipo, String pNombre, String pDireccion, String pCiudad, String pCedula, String pTelefono, String pTelContacto){
+	public String insertarCliente(String pTipo, String pNombre, String pDireccion, String pCiudad, String pCedula, String pTelefono, String pNombreContacto, String pTelContacto, String pCargoContacto){
 		int tipo = Integer.parseInt(pTipo);
-		int cedula = Integer.parseInt(pCedula);
+		long cedula = Long.parseLong(pCedula);
 		int telefono = Integer.parseInt(pTelefono);
 		int telContacto = Integer.parseInt(pTelContacto);
 
-		return dataBase.insertarCliente(tipo, pNombre, pDireccion, pCiudad, cedula, telefono, telContacto);
+		return dataBase.insertarCliente(tipo, pNombre, pDireccion, pCiudad, cedula, telefono, pNombreContacto, telContacto, pCargoContacto);
 	}
 
-	public String modificarCliente(String pTipo, String pNombre, String pDireccion, String pCiudad, String pCedula, String pTelefono, String pTelContacto){
+	public String modificarCliente(String pTipo, String pNombre, String pDireccion, String pCiudad, String pCedula, String pTelefono, String pNombreContacto, String pTelContacto, String pCargoContacto){
 		int tipo = Integer.parseInt(pTipo);
-		int cedula = Integer.parseInt(pCedula);
+		long cedula = Long.parseLong(pCedula);
 		int telefono = Integer.parseInt(pTelefono);
 		int telContacto = Integer.parseInt(pTelContacto);
 		
-		return dataBase.modificarCliente(tipo, pNombre, pDireccion, pCiudad, cedula, telefono, telContacto);
+		return dataBase.modificarCliente(tipo, pNombre, pDireccion, pCiudad, cedula, telefono, pNombreContacto, telContacto, pCargoContacto);
 	}
 
 	public String suspenderCliente(String pTipo, String pCedula, String pCedulaJ){
@@ -35,6 +35,14 @@ public class ClienteController {
 		int cedulaJ = Integer.parseInt(pCedulaJ);
 
 		return dataBase.suspenderCliente(tipo, cedula, cedulaJ);
+	}
+
+	public String activarCliente(String pTipo, String pCedula, String pCedulaJ){
+		int tipo = Integer.parseInt(pTipo);
+		int cedula = Integer.parseInt(pCedula);
+		int cedulaJ = Integer.parseInt(pCedulaJ);
+
+		return dataBase.activarCliente(tipo, cedula, cedulaJ);
 	}
 
 	public String[][] listarClientes(){

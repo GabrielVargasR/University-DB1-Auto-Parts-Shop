@@ -20,6 +20,8 @@ public class OrderDetailPanel extends JPanel implements IUIConstants{
 	private JTextField amountEntry;
 	private JLabel partNameLabel;
 	private JTextField partNameEntry;
+	private JLabel partBrandLabel;
+	private JTextField partBrandEntry;
 	private JLabel providerNameLabel;
 	private JTextField providerNameEntry;
 
@@ -43,6 +45,8 @@ public class OrderDetailPanel extends JPanel implements IUIConstants{
 		this.add(this.amountEntry);
 		this.add(this.partNameLabel);
 		this.add(this.partNameEntry);
+		this.add(this.partBrandLabel);
+		this.add(this.partBrandEntry);
 		this.add(this.providerNameLabel);
 		this.add(this.providerNameEntry);
 		this.add(this.associateAmount);
@@ -51,11 +55,13 @@ public class OrderDetailPanel extends JPanel implements IUIConstants{
 	private void initComponents(){
 		this.orderIDLabel = new JLabel("Consecutivo de orden");
 		this.amountLabel = new JLabel("Cantiad");
-		this.partNameLabel = new JLabel("ID de la parte");
-		this.providerNameLabel = new JLabel("ID del proveedor");
+		this.partNameLabel = new JLabel("Nombre de la parte");
+		this.partBrandLabel = new JLabel("Marca de la parte");
+		this.providerNameLabel = new JLabel("Nombre del proveedor");
 		this.orderIDEntry = new JTextField(20);
 		this.amountEntry = new JTextField(20);
 		this.partNameEntry = new JTextField(20);
+		this.partBrandEntry = new JTextField(20);
 		this.providerNameEntry = new JTextField(20);
 		
 		this.associateAmount = new JButton("Asociar");
@@ -67,7 +73,7 @@ public class OrderDetailPanel extends JPanel implements IUIConstants{
 	public ActionListener associate() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				mensaje.setText(controller.asociarDetalle(orderIDEntry.getText(), partNameEntry.getText(), providerNameEntry.getText(), amountEntry.getText()));
+				mensaje.setText(controller.asociarDetalle(orderIDEntry.getText(), partNameEntry.getText(), partBrandEntry.getText(), providerNameEntry.getText(), amountEntry.getText()));
 			}
 		};
 		return action;

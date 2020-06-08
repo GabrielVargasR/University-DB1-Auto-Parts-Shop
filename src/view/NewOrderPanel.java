@@ -48,10 +48,10 @@ public class NewOrderPanel extends JPanel implements IUIConstants{
 		this.DateEntry = new JTextField(20);
 		
 		this.registerOrder = new JButton("Agregar");
-		this.registerOrder.addActionListener(this.add());
+		this.registerOrder.addActionListener(this.addOrder());
 	}
 
-	public ActionListener add() {
+	public ActionListener addOrder() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
 				String cedula = clientIDEntry.getText();

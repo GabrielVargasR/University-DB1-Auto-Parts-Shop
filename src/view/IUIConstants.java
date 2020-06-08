@@ -23,7 +23,7 @@ public interface IUIConstants {
 	
 	public static final String NEW_CLIENT_ITEM_TEXT = "Agregar";
 	public static final String MOD_CLIENT_ITEM_TEXT = "Modificar";
-	public static final String SUSPEND_CLIENT_ITEM_TEXT = "Suspender";
+	public static final String SUSPEND_CLIENT_ITEM_TEXT = "Suspender/Activar";
 	public static final String LIST_CLIENTS_ITEM_TEXT = "Listar";
 	
 	public static final String NEW_PART_ITEM_TEXT = "Insertar nueva";
@@ -36,6 +36,7 @@ public interface IUIConstants {
 	public static final String LOCATE_PROVIDER_ITEM_TEXT = "Localizar proveedores";
 	public static final String NEW_ORDER_ITEM_TEXT = "Insertar nueva";
 	public static final String PROVIDER_DATA_ITEM_TEXT = "Asociar compra de partes";
+	public static final String ORDER_INFO = "Información orden";
 	
 	//New clients Panel constants
 	public static final String[] TIPOS_CLIENTE = {"", "Persona", "Organización"};
@@ -46,6 +47,7 @@ public interface IUIConstants {
 	public static final String[] CLIENTS = {"ID", "Cédula", "Nombre", "Teléfono", "Dirección", "Ciudad", "Estado", "Contacto"};
 	public static final String[] LOCATE_PROVIDERS = {"ID", "Nombre", "Dirección", "Ciudad", "Teléfono", "Contacto"};
 	public static final String[] PARTES_AUTOS = {"ID", "Nombre", "Marca"};
+	public static final String[] ORDEN_COLUMNS = {"Cedula Cliente", "Fecha", "Monto", "IVA", "Total"};
 	
 	
 	public static String PERSONA = "0";

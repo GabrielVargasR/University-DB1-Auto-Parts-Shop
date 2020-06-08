@@ -17,11 +17,11 @@ public class UserInterface extends JFrame implements IUIConstants{
 	private JMenu clientsMenu, partsMenu, ordersMenu;
 	private JMenuItem newClientItem, modClientItem, suspendClientItem, listClientsItem;
 	private JMenuItem newPartItem, deletePartItem, addProviderItem, addCarTypeItem, updatePriceItem, listCarPartsItem;
-	private JMenuItem locateProviderItem, newOrderItem, providerDataItem;
+	private JMenuItem locateProviderItem, newOrderItem, providerDataItem, readOrderItem;
 	private JPanel container;
 	private JPanel newClientPanel, modClientPanel, suspendClientPanel, listClientsPanel;
 	private JPanel newPartPanel, deletePartPanel, addProviderPanel, associateCarPanel, updatePricePanel, listCarPartsPanel;
-	private JPanel locateProviderPanel, newOrderPanel, providerDataPanel;
+	private JPanel locateProviderPanel, newOrderPanel, providerDataPanel, readOrder;
 	private JLabel messageLabel;
 	private CardLayout layout;
 	
@@ -97,14 +97,17 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.locateProviderItem = new JMenuItem(LOCATE_PROVIDER_ITEM_TEXT);
 		this.newOrderItem = new JMenuItem(NEW_ORDER_ITEM_TEXT);
 		this.providerDataItem = new JMenuItem(PROVIDER_DATA_ITEM_TEXT);
+		this.readOrderItem = new JMenuItem(ORDER_INFO);
 		
 		this.locateProviderItem.addActionListener(this.menuItemListener("11"));
 		this.newOrderItem.addActionListener(this.menuItemListener("12"));
 		this.providerDataItem.addActionListener(this.menuItemListener("13"));
+		this.readOrderItem.addActionListener(this.menuItemListener("14"));
 		
 		this.ordersMenu.add(this.locateProviderItem);
 		this.ordersMenu.add(this.newOrderItem);
 		this.ordersMenu.add(this.providerDataItem);
+		this.ordersMenu.add(this.readOrderItem);
 		
 		this.menu.add(clientsMenu);
 		this.menu.add(partsMenu);
@@ -150,10 +153,12 @@ public class UserInterface extends JFrame implements IUIConstants{
 		this.locateProviderPanel = new LocateProviderPanel(this.messageLabel);
 		this.newOrderPanel = new NewOrderPanel(this.messageLabel);
 		this.providerDataPanel = new OrderDetailPanel(this.messageLabel);
+		this.readOrder = new ReadOrderPanel(this.messageLabel);
 		
 		this.container.add(this.locateProviderPanel, "11");
 		this.container.add(this.newOrderPanel, "12");
 		this.container.add(this.providerDataPanel, "13");
+		this.container.add(this.readOrder, "14");
 	}
 
 	public void display(){

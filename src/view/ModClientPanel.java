@@ -20,7 +20,9 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 	private JLabel telefonoLabel;
 	private JLabel direccionLabel;
 	private JLabel ciudadLabel;
+	private JLabel nombreContactoLabel;
 	private JLabel telefonoContactoLabel;
+	private JLabel cargoContactoLabel;
 	
 	private JComboBox<String> tipoCombo;
 	private JTextField nombreEntry;
@@ -28,7 +30,9 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 	private JTextField telefonoEntry;
 	private JTextField direccionEntry;
 	private JTextField ciudadEntry;
+	private JTextField nombreContactoEntry;
 	private JTextField telefonoContactoEntry;
+	private JTextField cargoContactoEntry;
 	
 	private JButton modInfo;
 	private ClienteController controller;
@@ -41,7 +45,7 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 		super.setBounds(PANEL_X, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT);
 		super.setOpaque(true);
 		
-		super.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 40));
+		super.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 30));
 		
 		this.initComponents();
 		this.controller = new ClienteController();
@@ -59,8 +63,12 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 		this.add(this.direccionEntry);
 		this.add(this.ciudadLabel);
 		this.add(this.ciudadEntry);
+		this.add(this.nombreContactoLabel);
+		this.add(this.nombreContactoEntry);
 		this.add(this.telefonoContactoLabel);
 		this.add(this.telefonoContactoEntry);
+		this.add(this.cargoContactoLabel);
+		this.add(this.cargoContactoEntry);
 		this.add(this.modInfo);
 	}
 	
@@ -71,14 +79,18 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 		this.telefonoLabel = new JLabel("Teléfono:");
 		this.direccionLabel = new JLabel("Dirección:");
 		this.ciudadLabel = new JLabel("Ciudad:");
+		this.nombreContactoLabel = new JLabel("Nombre de contacto:");
 		this.telefonoContactoLabel = new JLabel("Teléfono de contacto:");
+		this.cargoContactoLabel = new JLabel("Cargo de contacto:");
 		
 		this.nombreEntry = new JTextField(20);
 		this.cedulaEntry = new JTextField(20);
 		this.telefonoEntry = new JTextField(20);
 		this.direccionEntry = new JTextField(20);
 		this.ciudadEntry = new JTextField(20);
+		this.nombreContactoEntry = new JTextField(20);
 		this.telefonoContactoEntry = new JTextField(20);
+		this.cargoContactoEntry = new JTextField(20);
 		
 		this.modInfo = new JButton("Modificar");
 		this.modInfo.addActionListener(this.modificar());
@@ -108,7 +120,8 @@ public class ModClientPanel extends JPanel implements IUIConstants{
 					contacto = "0";
 				} else contacto = telefonoContactoEntry.getText();
 
-				mensaje.setText(controller.modificarCliente(tipoCliente, nombreEntry.getText(), direccionEntry.getText(), ciudadEntry.getText(), cedulaEntry.getText(), telefonoEntry.getText(), contacto));
+				mensaje.setText(controller.modificarCliente(tipoCliente, nombreEntry.getText(), direccionEntry.getText(), ciudadEntry.getText(), cedulaEntry.getText(), 
+								telefonoEntry.getText(), nombreContactoEntry.getText(),contacto, cargoContactoEntry.getText()));
 			}
 		};
 		return action;

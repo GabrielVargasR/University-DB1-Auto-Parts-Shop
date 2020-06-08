@@ -14,13 +14,15 @@ public class UpdatePricePanel extends JPanel implements IUIConstants{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel partNameLabel;
+	private JLabel partBrandLabel;
 	private JLabel providerNameLabel;
 	private JLabel providerPriceLabel;
-	private JLabel shopPriceLabel;
+	private JLabel profitLabel;
 	private JTextField partNameEntry;
+	private JTextField partBrandEntry;
 	private JTextField providerNameEntry;
 	private JTextField providerPriceEntry;
-	private JTextField shopPriceEntry;
+	private JTextField profitEntry;
 	
 	private JButton addProviderButton;
 
@@ -39,26 +41,30 @@ public class UpdatePricePanel extends JPanel implements IUIConstants{
 
 		this.add(this.partNameLabel);
 		this.add(this.partNameEntry);
+		this.add(this.partBrandLabel);
+		this.add(this.partBrandEntry);
 		this.add(this.providerNameLabel);
 		this.add(this.providerNameEntry);
 		this.add(this.providerPriceLabel);
 		this.add(this.providerPriceEntry);
-		this.add(this.shopPriceLabel);
-		this.add(this.shopPriceEntry);
+		this.add(this.profitLabel);
+		this.add(this.profitEntry);
 		
 		this.add(this.addProviderButton);
 	}
 	
 	private void initComponents(){
 
-		this.partNameLabel = new JLabel("ID de parte");
-		this.providerNameLabel = new JLabel("ID de proveedor");
+		this.partNameLabel = new JLabel("Nombre de parte");
+		this.partBrandLabel = new JLabel("Marca de parte");
+		this.providerNameLabel = new JLabel("Nombre de proveedor");
 		this.providerPriceLabel = new JLabel("Precio proveedor");
-		this.shopPriceLabel = new JLabel("Precio tienda");
+		this.profitLabel = new JLabel("Porcentaje de ganancia");
 		this.partNameEntry = new JTextField(20);
+		this.partBrandEntry = new JTextField(20);
 		this.providerNameEntry = new JTextField(20);
 		this.providerPriceEntry = new JTextField(20);
-		this.shopPriceEntry = new JTextField(20);
+		this.profitEntry = new JTextField(20);
 		
 		this.addProviderButton = new JButton("Actualizar");
 		this.addProviderButton.addActionListener(this.actualizar());
@@ -67,7 +73,7 @@ public class UpdatePricePanel extends JPanel implements IUIConstants{
 	public ActionListener actualizar() {
 		ActionListener action = new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
-				mensaje.setText(controller.actualizarPrecio(partNameEntry.getText(), providerNameEntry.getText(), providerPriceEntry.getText(), shopPriceEntry.getText()));
+				mensaje.setText(controller.actualizarPrecio(partNameEntry.getText(), partBrandEntry.getText(), providerNameEntry.getText(), providerPriceEntry.getText(), profitEntry.getText()));
 			}
 		};
 		return action;
